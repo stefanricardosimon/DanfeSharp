@@ -28,7 +28,6 @@ namespace DanfeSharp.Modelo
         /// </summary>
         public String Ncm { get; set; }
 
-
         /// <summary>
         /// <para>Origem da mercadoria + Tributação do ICMS</para>
         /// <para>Tag orig e CST</para>
@@ -121,5 +120,10 @@ namespace DanfeSharp.Modelo
                 return descriCaoCompleta;
             }
         }
+
+        //Comércio Exterior - OMA - NT 2016.001
+        public string UnidadeTrib { get; set; }
+        public double QuantidadeTrib { get; set; }
+        public double ValorUnitarioTrib { get; set; }
     }
 }

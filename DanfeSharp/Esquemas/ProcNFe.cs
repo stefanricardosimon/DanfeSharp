@@ -218,8 +218,8 @@ namespace DanfeSharp.Esquemas.NFe
         public double vProd { get; set; }
         public string cEANTrib { get; set; }
         public string uTrib { get; set; }
-        public string qTrib { get; set; }
-        public string vUnTrib { get; set; }
+        public double qTrib { get; set; }
+        public double vUnTrib { get; set; }
         public string vFrete { get; set; }        
         public string vSeg { get; set; }
         public string vDesc { get; set; }

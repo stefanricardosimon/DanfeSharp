@@ -72,9 +72,10 @@ namespace DanfeSharp.Blocos
                     p.Ncm,
                     p.OCst,
                     p.Cfop.Formatar("N0"),
-                    p.Unidade,
-                    p.Quantidade.Formatar(),
-                    p.ValorUnitario.Formatar(),
+                    //Comércio Exterior - OMA - NT 2016.001
+                    string.Equals(p.Unidade, p.UnidadeTrib) ? p.Unidade : p.Unidade + "\r\n" + p.UnidadeTrib,
+                    Equals(p.Quantidade, p.QuantidadeTrib) ? p.Quantidade.Formatar() : p.Quantidade.Formatar() + "\r\n" + p.QuantidadeTrib.Formatar(),
+                    Equals(p.ValorUnitario, p.ValorUnitarioTrib) ? p.ValorUnitario.Formatar() : p.ValorUnitario.Formatar() + "\r\n" + p.ValorUnitarioTrib.Formatar(),
                     p.ValorTotal.Formatar(),
                     p.BaseIcms.Formatar(),
                     p.ValorIcms.Formatar(),

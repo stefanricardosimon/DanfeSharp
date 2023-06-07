@@ -115,9 +115,15 @@ namespace DanfeSharp.Modelo
             ProcNFe nfe = null;
             XmlSerializer serializer = new XmlSerializer(typeof(ProcNFe));
 
+            //Mostrar a chave de acesso do documento no disparo da exceção.
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(reader.ReadToEnd());
+            string chave = doc.SelectSingleNode("//*[local-name()='chNFe']").InnerText;
+            TextReader sr = new StringReader(doc.OuterXml);
+
             try
             {
-                nfe = (ProcNFe)serializer.Deserialize(reader);
+                nfe = (ProcNFe)serializer.Deserialize(sr);
                 return CreateFromXml(nfe);
             }
             catch (System.InvalidOperationException e)
@@ -125,10 +131,10 @@ namespace DanfeSharp.Modelo
                 if (e.InnerException is XmlException)
                 {
                     XmlException ex = (XmlException)e.InnerException;
-                    throw new Exception(String.Format("Não foi possível interpretar o Xml. Linha {0} Posição {1}.", ex.LineNumber, ex.LinePosition));
+                    throw new Exception(String.Format("Não foi possível interpretar o XML de chave " + chave + ". Linha {0}, posição {1}.", ex.LineNumber, ex.LinePosition));
                 }
 
-                throw new XmlException("O Xml não parece ser uma NF-e processada.", e);
+                throw new XmlException("O XML de chave " + chave + " não parece ser uma NF-e processada.", e);
             }
         }
 
@@ -252,6 +258,10 @@ namespace DanfeSharp.Modelo
                 produto.ValorUnitario = det.prod.vUnCom;
                 produto.ValorTotal = det.prod.vProd;
                 produto.InformacoesAdicionais = det.infAdProd;
+                //Comércio Exterior - OMA - NT 2016.001
+                produto.UnidadeTrib = det.prod.uTrib;
+                produto.QuantidadeTrib = det.prod.qTrib;
+                produto.ValorUnitarioTrib = det.prod.vUnTrib;
 
                 var imposto = det.imposto;
 

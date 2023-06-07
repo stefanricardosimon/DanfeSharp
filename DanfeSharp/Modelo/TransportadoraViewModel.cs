@@ -7,12 +7,12 @@ namespace DanfeSharp.Modelo
     {
         public static readonly Dictionary<int, String> ModalidadesFrete = new Dictionary<int,string>()
         {
-            {0, "Por conta Remetente"},
-            {1, "Por conta Destinatário"},
-            {2, "Por conta Terceiros"},
-            {3, "Próprio, por conta Rem."},
-            {4, "Próprio, por conta Dest."},
-            {9, "Sem Transporte"}
+            {0, "Remetente"},
+            {1, "Destinatário"},
+            {2, "Terceiros"},
+            {3, "Próprio, Rem."},
+            {4, "Próprio, Dest."},
+            {9, "Sem Frete"}
         };
 
         /// <summary>
