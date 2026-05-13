@@ -4,11 +4,7 @@ using org.pdfclown.documents.contents.composition;
 using org.pdfclown.documents.contents.fonts;
 using org.pdfclown.files;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DanfeSharp
 {
@@ -32,7 +28,7 @@ namespace DanfeSharp
             Gfx = new Gfx(PrimitiveComposer);
         }
 
-        public void Save(String path)
+        public void Save(string path)
         {
             File.Save(path, SerializationModeEnum.Standard);
         }

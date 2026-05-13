@@ -84,7 +84,7 @@ namespace DanfeSharp
 
         public static PointF ToPointMeasure(this PointF r) => new PointF(r.X.ToPoint(), r.Y.ToPoint());
         
-        public static StringBuilder AppendChaveValor(this StringBuilder sb, String chave, String valor)
+        public static StringBuilder AppendChaveValor(this StringBuilder sb, string chave, string valor)
         {
             if (sb.Length > 0) sb.Append(' ');
             return sb.Append(chave).Append(": ").Append(valor);

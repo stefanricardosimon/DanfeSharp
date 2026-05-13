@@ -1,5 +1,4 @@
 ﻿using DanfeSharp.Graphics;
-using System;
 using pcf = org.pdfclown.documents.contents.fonts;
 
 namespace DanfeSharp

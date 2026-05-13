@@ -13,7 +13,7 @@ namespace DanfeSharp
     {
         public const float DefaultLineHeightScale = 1.25F;
 
-        private List<String> _Lines;
+        private List<string> _Lines;
         private List<Fonte> _Fonts;
         public AlinhamentoHorizontal AlinhamentoHorizontal { get; set; }
         public AlinhamentoVertical AlinhamentoVertical { get; set; }
@@ -30,7 +30,7 @@ namespace DanfeSharp
             LineHeightScale = DefaultLineHeightScale;
         }
 
-        public TextStack AddLine(String text, Fonte font)
+        public TextStack AddLine(string text, Fonte font)
         {
             _Lines.Add(text);
             _Fonts.Add(font);

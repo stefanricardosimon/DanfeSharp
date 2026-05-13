@@ -27,7 +27,7 @@ namespace DanfeSharp
         private StandardType1Font _FonteItalico;
         private StandardType1Font.FamilyEnum _FonteFamilia;
 
-        private Boolean _FoiGerado;
+        private bool _FoiGerado;
 
         private org.pdfclown.documents.contents.xObjects.XObject _LogoObject = null;
 
@@ -92,9 +92,9 @@ namespace DanfeSharp
             }
         }
 
-        public void AdicionarLogoImagem(String path)
+        public void AdicionarLogoImagem(string path)
         {
-            if (String.IsNullOrWhiteSpace(path)) throw new ArgumentException(nameof(path));
+            if (string.IsNullOrWhiteSpace(path)) throw new ArgumentException(nameof(path));
 
             using(var fs = new System.IO.FileStream(path, System.IO.FileMode.Open, System.IO.FileAccess.Read))
             {
@@ -102,9 +102,9 @@ namespace DanfeSharp
             }
         }
 
-        public void AdicionarLogoPdf(String path)
+        public void AdicionarLogoPdf(string path)
         {
-            if (String.IsNullOrWhiteSpace(path)) throw new ArgumentException(nameof(path));
+            if (string.IsNullOrWhiteSpace(path)) throw new ArgumentException(nameof(path));
 
             using (var fs = new System.IO.FileStream(path, System.IO.FileMode.Open, System.IO.FileAccess.Read))
             {
@@ -118,7 +118,7 @@ namespace DanfeSharp
             info[new org.pdfclown.objects.PdfName("ChaveAcesso")] = ViewModel.ChaveAcesso;
             info[new org.pdfclown.objects.PdfName("TipoDocumento")] = "DANFE";
             info.CreationDate = DateTime.Now;
-            info.Creator = String.Format("{0} {1} - {2}", "DanfeSharp", System.Reflection.Assembly.GetExecutingAssembly().GetName().Version, "https://github.com/SilverCard/DanfeSharp");
+            info.Creator = string.Format("{0} {1} - {2}", "DanfeSharp", System.Reflection.Assembly.GetExecutingAssembly().GetName().Version, "https://github.com/SilverCard/DanfeSharp");
             info.Title = "DANFE (Documento auxiliar da NFe)";
         }
 
@@ -209,9 +209,9 @@ namespace DanfeSharp
             }
         }
 
-        public void Salvar(String path)
+        public void Salvar(string path)
         {
-            if (String.IsNullOrWhiteSpace(path)) throw new ArgumentException(nameof(path));
+            if (string.IsNullOrWhiteSpace(path)) throw new ArgumentException(nameof(path));
 
             File.Save(path, SerializationModeEnum.Incremental);
         }

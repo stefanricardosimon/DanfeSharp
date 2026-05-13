@@ -11,7 +11,7 @@ namespace DanfeSharp
         public Fonte FonteB { get; private set; }
         public DuplicataViewModel ViewModel { get; private set; }
 
-        private static readonly String[] Chaves = { "Número", "Vencimento:", "Valor:" };
+        private static readonly string[] Chaves = { "Número", "Vencimento:", "Valor:" };
 
         public Duplicata(Estilo estilo, DuplicataViewModel viewModel) : base(estilo)
         {
@@ -26,7 +26,7 @@ namespace DanfeSharp
 
             var r = BoundingBox.InflatedRetangle(Estilo.PaddingSuperior, Estilo.PaddingInferior, Estilo.PaddingHorizontal);
 
-            String[] valores = { ViewModel.Numero, ViewModel.Vecimento.Formatar(), ViewModel.Valor.FormatarMoeda() };
+            string[] valores = { ViewModel.Numero, ViewModel.Vecimento.Formatar(), ViewModel.Valor.FormatarMoeda() };
 
             for (int i = 0; i < Chaves.Length; i++)
             {

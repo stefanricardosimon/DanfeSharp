@@ -66,7 +66,7 @@ namespace DanfeSharp
 
             if (ViewModel.PreferirEmitenteNomeFantasia)
             {
-                nome = !String.IsNullOrWhiteSpace(emitente.NomeFantasia) ? emitente.NomeFantasia : emitente.RazaoSocial;
+                nome = !string.IsNullOrWhiteSpace(emitente.NomeFantasia) ? emitente.NomeFantasia : emitente.RazaoSocial;
             } 
 
             var ts = new TextStack(rp) {  LineHeightScale = 1 }

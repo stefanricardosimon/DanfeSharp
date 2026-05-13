@@ -9,9 +9,9 @@ namespace DanfeSharp
     internal class CabecalhoBloco : ElementoBase
     {
         public const float MargemSuperior = 0.8F;
-        public String Cabecalho { get; set; }
+        public string Cabecalho { get; set; }
 
-        public CabecalhoBloco(Estilo estilo, String cabecalho) : base(estilo)
+        public CabecalhoBloco(Estilo estilo, string cabecalho) : base(estilo)
         {
             Cabecalho = cabecalho ?? throw new ArgumentNullException(cabecalho);
         }

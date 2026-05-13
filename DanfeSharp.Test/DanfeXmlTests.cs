@@ -1,11 +1,6 @@
 ﻿using DanfeSharp.Modelo;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DanfeSharp.Test
 {
@@ -21,7 +16,7 @@ namespace DanfeSharp.Test
                 Directory.CreateDirectory(OutputDirectory);
         }
 
-        public void TestXml(String xmlPath)
+        public void TestXml(string xmlPath)
         {
             var outPdfFilePath = Path.Combine(OutputDirectory, Path.GetFileNameWithoutExtension(xmlPath) + ".pdf");
             var model = DanfeViewModelCreator.CriarDeArquivoXml(Path.Combine(InputXmlDirectoryPrefix, xmlPath));
@@ -49,5 +44,8 @@ namespace DanfeSharp.Test
 
         [TestMethod]
         public void v4_QuebraLinha() => TestXml("v4.00/v4_QuebraLinha.xml");
+
+        [TestMethod]
+        public void v5_Dados() => TestXml("v4.00/v4_Dados.xml");
     }
 }

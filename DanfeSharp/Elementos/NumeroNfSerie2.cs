@@ -1,6 +1,5 @@
 ﻿using DanfeSharp.Graphics;
 using DanfeSharp.Modelo;
-using System;
 using System.Drawing;
 
 namespace DanfeSharp

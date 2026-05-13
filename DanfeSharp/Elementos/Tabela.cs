@@ -4,15 +4,13 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DanfeSharp
 {
     internal class Tabela : ElementoBase
     {
         public List<TabelaColuna> Colunas { get; private set; }
-        public List<List<String>> Linhas { get; private set; }
+        public List<List<string>> Linhas { get; private set; }
         public float PaddingSuperior { get; private set; }
         public float PaddingInferior { get; private set; }
         public float PaddingHorizontal { get; private set; }
@@ -44,13 +42,13 @@ namespace DanfeSharp
             FonteCabecalho = estilo.CriarFonteRegular(6F);
         }
 
-        public Tabela ComColuna(float larguraP, AlinhamentoHorizontal ah, params String[] cabecalho)
+        public Tabela ComColuna(float larguraP, AlinhamentoHorizontal ah, params string[] cabecalho)
         {
             Colunas.Add(new TabelaColuna(cabecalho, larguraP, ah));
             return this;
         }
 
-        public void AdicionarLinha(List<String> linha)
+        public void AdicionarLinha(List<string> linha)
         {
             if (linha.Count != Colunas.Count) throw new ArgumentException(nameof(linha));
             Linhas.Add(linha);
@@ -69,7 +67,7 @@ namespace DanfeSharp
 
         }
 
-        private Boolean DesenharLinha(Gfx gfx)
+        private bool DesenharLinha(Gfx gfx)
         {
             float x = X;
             _DY1 = _DY;
@@ -83,7 +81,7 @@ namespace DanfeSharp
 
                 float w = (Width * c.PorcentagemLargura) / 100F;               
 
-                if (!String.IsNullOrWhiteSpace(v))
+                if (!string.IsNullOrWhiteSpace(v))
                 {
 
                     tb[i] = new TextBlock(v, FonteCorpo)
@@ -160,7 +158,7 @@ namespace DanfeSharp
 
             while (LinhaAtual < Linhas.Count)
             {
-                Boolean r = DesenharLinha(gfx);
+                bool r = DesenharLinha(gfx);
 
                 if (r)
                 {

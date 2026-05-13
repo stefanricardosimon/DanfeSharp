@@ -39,9 +39,9 @@ namespace DanfeSharp.Graphics
         /// </summary>
         /// <param name="str">String</param>
         /// <returns>Largura em mm.</returns>
-        public float MedirLarguraTexto(String str)
+        public float MedirLarguraTexto(string str)
         {
-            if (String.IsNullOrEmpty(str)) return 0;
+            if (string.IsNullOrEmpty(str)) return 0;
             return (float)FonteInterna.GetWidth(str, Tamanho).ToMm();
         }
 

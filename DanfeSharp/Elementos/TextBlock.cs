@@ -12,15 +12,15 @@ namespace DanfeSharp
     /// </summary>
     internal class TextBlock : DrawableBase
     {
-        private String _Text;
-        public String Text { get => _Text; set { _Text = value; _Height = null; } }
+        private string _Text;
+        public string Text { get => _Text; set { _Text = value; _Height = null; } }
 
-        public List<String[]> Blocks { get; private set; }
+        public List<string[]> Blocks { get; private set; }
         public List<float[]> BlocksW { get; private set; }
 
         public Fonte Fonte { get; private set; }
 
-        public List<String> Lines { get; private set; }
+        public List<string> Lines { get; private set; }
         private float? _Height;
 
         public override float Width { get => base.Width; set { base.Width = value; _Height = null; } }
@@ -40,7 +40,7 @@ namespace DanfeSharp
 
         public override void Draw(Gfx gfx)
         {
-            if (String.IsNullOrEmpty(_Text)) return;
+            if (string.IsNullOrEmpty(_Text)) return;
 
             base.Draw(gfx);
             if (!_Height.HasValue) CalculateLines();
@@ -54,7 +54,7 @@ namespace DanfeSharp
             }
         }
 
-        private void BreakLongText(String str)
+        private void BreakLongText(string str)
         {
             char[] c = str.ToCharArray();
             float w1 = 0;
@@ -77,7 +77,7 @@ namespace DanfeSharp
             Lines.Add(sb1.ToString());
         }
 
-        private void CalculateBlocks(String[] blocks, float[] blocksW)
+        private void CalculateBlocks(string[] blocks, float[] blocksW)
         {
             float x = 0;
             StringBuilder sb = new StringBuilder();
@@ -153,15 +153,15 @@ namespace DanfeSharp
             }
         }
 
-        public TextBlock(String text, Fonte f)
+        public TextBlock(string text, Fonte f)
         {
             Text = text;
             Fonte = f;
-            Blocks = new List<String[]>();
+            Blocks = new List<string[]>();
             BlocksW = new List<float[]>();
             SplitText();
             AlinhamentoHorizontal = AlinhamentoHorizontal.Esquerda;
-            Lines = new List<String>();
+            Lines = new List<string>();
         }
     }
 }

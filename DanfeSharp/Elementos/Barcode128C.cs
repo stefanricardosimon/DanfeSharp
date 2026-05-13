@@ -18,7 +18,7 @@ namespace DanfeSharp
         /// <summary>
         /// Código a ser codificado em barras.
         /// </summary>
-        public String Code { get; private set; }
+        public string Code { get; private set; }
 
         /// <summary>
         /// Largura do código de barras.
@@ -142,9 +142,9 @@ namespace DanfeSharp
 
         }
 
-        public Barcode128C(String code, Estilo estilo, float largura = 75F) : base(estilo)
+        public Barcode128C(string code, Estilo estilo, float largura = 75F) : base(estilo)
         {
-            if (String.IsNullOrWhiteSpace(code))
+            if (string.IsNullOrWhiteSpace(code))
             {
                 throw new ArgumentException("O código não pode ser vazio.", "code");
             }

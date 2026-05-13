@@ -87,7 +87,7 @@ namespace DanfeSharp.Esquemas
 
         public override string ToString()
         {
-            String cpfCnpj = !String.IsNullOrWhiteSpace(CNPJ) ? CNPJ : CPF;
+            string cpfCnpj = !string.IsNullOrWhiteSpace(CNPJ) ? CNPJ : CPF;
             return $"NFP Ref.: Série: {serie} Número: {nNF} Emitente: {Formatador.FormatarCpfCnpj(cpfCnpj)} Modelo: {mod} IE: {IE}";
         }
     }
