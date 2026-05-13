@@ -16,7 +16,7 @@ namespace DanfeSharp.Blocos
             var campos = new LinhaCampos(Estilo) { Height = AlturaLinha2 }
                .ComCampo("Data de Recebimento", null)
                .ComCampo("Identificação e assinatura do recebedor", null)
-               .ComLarguras(50, 0);
+               .ComLarguras(30, 0);
 
             var coluna1 = new VerticalStack();
             coluna1.Add(textoRecebimento, campos);

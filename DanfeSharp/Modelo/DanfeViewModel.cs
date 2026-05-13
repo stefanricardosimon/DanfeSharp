@@ -61,26 +61,26 @@ namespace DanfeSharp.Modelo
         /// <summary>
         /// Chave de Acesso
         /// </summary>
-        public String ChaveAcesso { get; set; }
+        public string ChaveAcesso { get; set; }
                     
 
         /// <summary>
         /// <para>Descrição da Natureza da Operação</para>
         /// <para>Tag natOp</para>
         /// </summary>
-        public String NaturezaOperacao { get; set; }
+        public string NaturezaOperacao { get; set; }
 
         /// <summary>
         /// <para>Informações Complementares de interesse do Contribuinte</para>
         /// <para>Tag infCpl</para>
         /// </summary>
-        public String InformacoesComplementares { get; set; }
+        public string InformacoesComplementares { get; set; }
 
         /// <summary>
         /// <para>Informações adicionais de interesse do Fisco</para>
         /// <para>Tag infAdFisco</para>
         /// </summary>
-        public String InformacoesAdicionaisFisco { get; set; }
+        public string InformacoesAdicionaisFisco { get; set; }
 
         /// <summary>
         /// <para>Data e Hora de emissão do Documento Fiscal</para>
@@ -124,7 +124,7 @@ namespace DanfeSharp.Modelo
         /// <summary>
         /// Numero do protocolo com sua data e hora
         /// </summary>
-        public String ProtocoloAutorizacao { get; set; }
+        public string ProtocoloAutorizacao { get; set; }
 
         /// <summary>
         /// Faturas da Nota Fiscal
@@ -164,12 +164,12 @@ namespace DanfeSharp.Modelo
         /// <summary>
         /// Descrição do status da resposta, xMotivo, do elemento infProt.
         /// </summary>
-        public String DescricaoStatusReposta { get; set; }
+        public string DescricaoStatusReposta { get; set; }
 
         /// <summary>
         /// Informações de Notas Fiscais referenciadas que serão levadas no texto adicional.
         /// </summary>
-        public List<String> NotasFiscaisReferenciadas { get; set; }
+        public List<string> NotasFiscaisReferenciadas { get; set; }
 
         #region Local Retirada e Entrega
 
@@ -184,17 +184,17 @@ namespace DanfeSharp.Modelo
         /// <summary>
         /// Tag xNEmp
         /// </summary>
-        public String NotaEmpenho { get; set; }
+        public string NotaEmpenho { get; set; }
 
         /// <summary>
         /// Tag xPed
         /// </summary>
-        public String Pedido { get; set; }
+        public string Pedido { get; set; }
 
         /// <summary>
         /// Tag xCont
         /// </summary>
-        public String Contrato { get; set; }
+        public string Contrato { get; set; }
 
         #endregion
 
@@ -234,7 +234,7 @@ namespace DanfeSharp.Modelo
 
         public DateTime? ContingenciaDataHora { get; set; }
 
-        public String ContingenciaJustificativa { get; set; }
+        public string ContingenciaJustificativa { get; set; }
 
         #endregion
 
@@ -254,28 +254,28 @@ namespace DanfeSharp.Modelo
         }
 
         
-        public Boolean MostrarCalculoIssqn { get; set; }
+        public bool MostrarCalculoIssqn { get; set; }
     
                 
         /// <summary>
         /// Substitui o ponto e vírgula (;) por uma quebra de linha.
         /// </summary>
-        private String BreakLines(String str)
+        private string BreakLines(string str)
         {
-            return str == null ? String.Empty : str.Replace(';', '\n');
+            return str == null ? string.Empty : str.Replace(';', '\n');
         }   
        
-        public static DanfeViewModel CreateFromXmlFile(String path)
+        public static DanfeViewModel CreateFromXmlFile(string path)
         {
             return DanfeViewModelCreator.CriarDeArquivoXml(path);
         }
 
-        public static DanfeViewModel CreateFromXmlString(String xml)
+        public static DanfeViewModel CreateFromXmlString(string xml)
         {
             return DanfeViewModelCreator.CreateFromXmlString(xml);
         }
 
-        public virtual String TextoRecebimento
+        public virtual string TextoRecebimento
         {
             get
             {
@@ -283,7 +283,7 @@ namespace DanfeSharp.Modelo
             }
         }
 
-        public virtual String TextoAdicionalFisco()
+        public virtual string TextoAdicionalFisco()
         {
             StringBuilder sb = new StringBuilder();
 
@@ -302,7 +302,7 @@ namespace DanfeSharp.Modelo
                     sb.Append($" - {ContingenciaDataHora.FormatarDataHora()}");
                 }
 
-                if (!String.IsNullOrWhiteSpace(ContingenciaJustificativa))
+                if (!string.IsNullOrWhiteSpace(ContingenciaJustificativa))
                 {
                     sb.Append($" - {ContingenciaJustificativa}");
                 }
@@ -314,30 +314,30 @@ namespace DanfeSharp.Modelo
             return sb.ToString();
         }
 
-        public virtual String TextoAdicional()
+        public virtual string TextoAdicional()
         {
             StringBuilder sb = new StringBuilder();
            
-            if (!String.IsNullOrEmpty(InformacoesComplementares))
+            if (!string.IsNullOrEmpty(InformacoesComplementares))
                 sb.AppendChaveValor("Inf. Contribuinte", InformacoesComplementares).Replace(";", "\r\n");
 
-            if (!String.IsNullOrEmpty(Destinatario.Email))
+            if (!string.IsNullOrEmpty(Destinatario.Email))
             {
                 // Adiciona um espaço após a virgula caso necessário, isso facilita a quebra de linha.
                 var destEmail = Regex.Replace(Destinatario.Email, @"(?<=\S)([,;])(?=\S)", "$1 ").Trim(new char[] {' ', ',', ';'});
                 sb.AppendChaveValor("Email do Destinatário", destEmail);
             }
 
-            if (!String.IsNullOrEmpty(InformacoesAdicionaisFisco))
+            if (!string.IsNullOrEmpty(InformacoesAdicionaisFisco))
                 sb.AppendChaveValor("Inf. fisco", InformacoesAdicionaisFisco);
             
-            if (!String.IsNullOrEmpty(Pedido) && !Utils.StringContemChaveValor(InformacoesComplementares, "Pedido", Pedido))
+            if (!string.IsNullOrEmpty(Pedido) && !Utils.StringContemChaveValor(InformacoesComplementares, "Pedido", Pedido))
                 sb.AppendChaveValor("Pedido", Pedido);
 
-            if (!String.IsNullOrEmpty(Contrato) && !Utils.StringContemChaveValor(InformacoesComplementares, "Contrato", Contrato))
+            if (!string.IsNullOrEmpty(Contrato) && !Utils.StringContemChaveValor(InformacoesComplementares, "Contrato", Contrato))
                 sb.AppendChaveValor("Contrato", Contrato);
 
-            if (!String.IsNullOrEmpty(NotaEmpenho))
+            if (!string.IsNullOrEmpty(NotaEmpenho))
                 sb.AppendChaveValor("Nota de Empenho", NotaEmpenho);
 
 
@@ -350,7 +350,7 @@ namespace DanfeSharp.Modelo
 
             #region NT 2013.003 Lei da Transparência
 
-            if (CalculoImposto.ValorAproximadoTributos.HasValue && (String.IsNullOrEmpty(InformacoesComplementares) ||
+            if (CalculoImposto.ValorAproximadoTributos.HasValue && (string.IsNullOrEmpty(InformacoesComplementares) ||
                !Regex.IsMatch(InformacoesComplementares, @"((valor|vlr?\.?)\s+(aprox\.?|aproximado)\s+(dos\s+)?(trib\.?|tributos))|((trib\.?|tributos)\s+(aprox\.?|aproximado))", RegexOptions.IgnoreCase)))
             {
                 if (sb.Length > 0) sb.Append("\r\n");
@@ -364,8 +364,8 @@ namespace DanfeSharp.Modelo
             return sb.ToString();
         }
 
-        public Boolean IsRetrato => Orientacao == Orientacao.Retrato;
-        public Boolean IsPaisagem => Orientacao == Orientacao.Paisagem;
+        public bool IsRetrato => Orientacao == Orientacao.Retrato;
+        public bool IsPaisagem => Orientacao == Orientacao.Paisagem;
 
     }
 }

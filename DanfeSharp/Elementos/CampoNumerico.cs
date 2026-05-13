@@ -1,5 +1,4 @@
-﻿using System;
-using DanfeSharp.Graphics;
+﻿using DanfeSharp.Graphics;
 
 namespace DanfeSharp.Elementos
 {

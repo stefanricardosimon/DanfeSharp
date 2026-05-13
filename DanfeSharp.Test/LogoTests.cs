@@ -15,11 +15,11 @@ namespace DanfeSharp.Test
             if (!Directory.Exists(OutputDirectoryName)) Directory.CreateDirectory(OutputDirectoryName);
         }
 
-        public void TestLogo(String logoPath, [CallerMemberName] string pdfName = null)
+        public void TestLogo(string logoPath, [CallerMemberName] string pdfName = null)
         {
             var model = FabricaFake.DanfeViewModel_1();
             model.Orientacao = Orientacao.Retrato;
-            using (DanfeSharp.Danfe d = new DanfeSharp.Danfe(model))
+            using (Danfe d = new Danfe(model))
             {
                 if (logoPath.EndsWith(".pdf", StringComparison.InvariantCultureIgnoreCase))
                 {

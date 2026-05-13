@@ -5,10 +5,10 @@ namespace DanfeSharp
 {
     class NumeroNfSerie : ElementoBase
     {
-        public String NfNumero { get; private set; }
-        public String NfSerie { get; private set; }
+        public string NfNumero { get; private set; }
+        public string NfSerie { get; private set; }
 
-        public NumeroNfSerie(Estilo estilo, String nfNumero, String nfSerie) : base(estilo)
+        public NumeroNfSerie(Estilo estilo, string nfNumero, string nfSerie) : base(estilo)
         {
             NfNumero = nfNumero;
             NfSerie = nfSerie;

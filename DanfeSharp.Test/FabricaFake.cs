@@ -1,11 +1,7 @@
 ﻿using DanfeSharp.Modelo;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DanfeSharp.Test
 {
@@ -72,10 +68,10 @@ namespace DanfeSharp.Test
             {
                 NfNumero = 888888888,
                 NfSerie = 888,
-                ChaveAcesso = new String('0', 44),
+                ChaveAcesso = new string('0', 44),
                 Emitente = new EmpresaViewModel()
                 {
-                    CnpjCpf = new String('0', 14),
+                    CnpjCpf = new string('0', 14),
                     RazaoSocial = "Abstergo do Brasil Indústria de Tecnologia Ltda.",
                     NomeFantasia = "Abstergo",
                     Email = "fake@mail.123",
@@ -94,7 +90,7 @@ namespace DanfeSharp.Test
                 },
                 Destinatario = new EmpresaViewModel()
                 {
-                    CnpjCpf = new String('1', 14),
+                    CnpjCpf = new string('1', 14),
                     RazaoSocial = "Umbrella Corp Ltda",
                     Email = "fake@mail.123",
                     EnderecoBairro = "Bairro",
@@ -112,10 +108,10 @@ namespace DanfeSharp.Test
                 Transportadora = new TransportadoraViewModel()
                 {
                     RazaoSocial = "Correios",
-                    CnpjCpf = new String('8', 14),
+                    CnpjCpf = new string('8', 14),
                     VeiculoUf = "RS",
                     QuantidadeVolumes = 123.1234,
-                    CodigoAntt = new String('8', 20),
+                    CodigoAntt = new string('8', 20),
                     EnderecoBairro = "Bairo",
                     EnderecoCep = "00000",
                     EnderecoComplemento = "Complemento",
@@ -160,7 +156,7 @@ namespace DanfeSharp.Test
                     Quantidade = i * Math.PI * 10,
                     AliquotaIcms = 99.88,
                     Unidade = "PEC",
-                    Ncm = new String('8', 8)
+                    Ncm = new string('8', 8)
                 };
 
                 if(i % 10 == 0)

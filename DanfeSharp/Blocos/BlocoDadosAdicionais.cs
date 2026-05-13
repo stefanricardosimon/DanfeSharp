@@ -1,7 +1,5 @@
 ﻿using DanfeSharp.Graphics;
 using DanfeSharp.Modelo;
-using DanfeSharp;
-using System;
 
 namespace DanfeSharp.Blocos
 {

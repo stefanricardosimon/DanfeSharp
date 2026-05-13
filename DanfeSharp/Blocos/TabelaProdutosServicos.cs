@@ -22,7 +22,7 @@ namespace DanfeSharp.Blocos
             var ae = AlinhamentoHorizontal.Esquerda;
 
             Tabela = new Tabela(Estilo);
-            String cabecalho4 = ViewModel.Emitente.CRT == "3" ? "O/CST" : "O/CSOSN";
+            string cabecalho4 = ViewModel.Emitente.CRT == "3" ? "O/CST" : "O/CSOSN";
 
             if (ViewModel.IsRetrato)
             { 
@@ -65,7 +65,7 @@ namespace DanfeSharp.Blocos
 
             foreach (var p in ViewModel.Produtos)
             {
-                var linha = new List<String>
+                var linha = new List<string>
                 {
                     p.Codigo,
                     p.DescricaoCompleta,
@@ -103,7 +103,7 @@ namespace DanfeSharp.Blocos
 
 
         public RectangleF RetanguloTabela => BoundingBox.CutTop(CabecalhoBloco.Height);
-        public Boolean CompletamenteDesenhada => Tabela.LinhaAtual == ViewModel.Produtos.Count;
+        public bool CompletamenteDesenhada => Tabela.LinhaAtual == ViewModel.Produtos.Count;
         public override bool PossuiContono => false;
     }
 }

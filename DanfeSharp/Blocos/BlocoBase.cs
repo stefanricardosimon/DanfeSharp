@@ -27,16 +27,16 @@ namespace DanfeSharp.Blocos
         /// <summary>
         /// Quando verdadeiro, o bloco é mostrado apenas na primeira página, caso contário é mostrado em todas elas.
         /// </summary>
-        public virtual Boolean VisivelSomentePrimeiraPagina => true;
+        public virtual bool VisivelSomentePrimeiraPagina => true;
 
-        public virtual String Cabecalho => null;
+        public virtual string Cabecalho => null;
 
         public BlocoBase(DanfeViewModel viewModel, Estilo estilo) : base(estilo)
         {
             MainVerticalStack = new VerticalStack();
             ViewModel = viewModel ?? throw new ArgumentNullException(nameof(viewModel));
 
-            if (!String.IsNullOrWhiteSpace(Cabecalho))
+            if (!string.IsNullOrWhiteSpace(Cabecalho))
             {
                 MainVerticalStack.Add(new CabecalhoBloco(estilo, Cabecalho));
             }

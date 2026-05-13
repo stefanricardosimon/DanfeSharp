@@ -10,7 +10,7 @@ namespace DanfeSharp
     {   
         TextBlock _tbConteudo;
 
-        public CampoMultilinha(String cabecalho, String conteudo, Estilo estilo, AlinhamentoHorizontal alinhamentoHorizontalConteudo = AlinhamentoHorizontal.Esquerda)
+        public CampoMultilinha(string cabecalho, string conteudo, Estilo estilo, AlinhamentoHorizontal alinhamentoHorizontalConteudo = AlinhamentoHorizontal.Esquerda)
               : base(cabecalho, conteudo, estilo, alinhamentoHorizontalConteudo)
         {
             _tbConteudo = new TextBlock(conteudo, estilo.FonteCampoConteudo);
@@ -19,7 +19,7 @@ namespace DanfeSharp
 
         protected override void DesenharConteudo(Gfx gfx)
         {
-            if (!String.IsNullOrWhiteSpace(Conteudo))
+            if (!string.IsNullOrWhiteSpace(Conteudo))
             {
                 _tbConteudo.SetPosition(RetanguloDesenhvael.X, RetanguloDesenhvael.Y + Estilo.FonteCampoCabecalho.AlturaLinha + Estilo.PaddingInferior);
                 _tbConteudo.Draw(gfx);

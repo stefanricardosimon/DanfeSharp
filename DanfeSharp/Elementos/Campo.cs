@@ -9,14 +9,14 @@ namespace DanfeSharp
     /// </summary>
     internal class Campo : ElementoBase
     {
-        public virtual String Cabecalho { get; set; }
-        public virtual String Conteudo { get; set; }
+        public virtual string Cabecalho { get; set; }
+        public virtual string Conteudo { get; set; }
 
         public AlinhamentoHorizontal AlinhamentoHorizontalConteudo { get; set; }
 
-        public Boolean IsConteudoNegrito { get; set; }
+        public bool IsConteudoNegrito { get; set; }
 
-        public Campo(String cabecalho, String conteudo, Estilo estilo, AlinhamentoHorizontal alinhamentoHorizontalConteudo = AlinhamentoHorizontal.Esquerda) : base(estilo)
+        public Campo(string cabecalho, string conteudo, Estilo estilo, AlinhamentoHorizontal alinhamentoHorizontalConteudo = AlinhamentoHorizontal.Esquerda) : base(estilo)
         {
             Cabecalho = cabecalho;
             this.Conteudo = conteudo;
@@ -27,7 +27,7 @@ namespace DanfeSharp
 
         protected virtual void DesenharCabecalho(Gfx gfx)
         {
-            if (!String.IsNullOrWhiteSpace(Cabecalho))
+            if (!string.IsNullOrWhiteSpace(Cabecalho))
             {
                 gfx.DrawString(Cabecalho.ToUpper(), RetanguloDesenhvael, Estilo.FonteCampoCabecalho, AlinhamentoHorizontal.Esquerda, AlinhamentoVertical.Topo);
             }
@@ -41,7 +41,7 @@ namespace DanfeSharp
             var fonte = IsConteudoNegrito ? Estilo.FonteCampoConteudoNegrito : Estilo.FonteCampoConteudo;
             fonte = fonte.Clonar();
 
-            if (!String.IsNullOrWhiteSpace(Conteudo))
+            if (!string.IsNullOrWhiteSpace(Conteudo))
             {
                 var textWidth = fonte.MedirLarguraTexto(Conteudo);
 
@@ -55,7 +55,7 @@ namespace DanfeSharp
                         fonte.Tamanho = Estilo.FonteTamanhoMinimo;
 
                         texto = "...";
-                        String texto2;
+                        string texto2;
 
                         for (int i = 1; i <= Conteudo.Length; i++)
                         {

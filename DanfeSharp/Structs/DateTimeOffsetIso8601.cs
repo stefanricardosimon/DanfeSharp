@@ -74,7 +74,7 @@ namespace DanfeSharp
         {
             var text = reader.ReadElementString();
 
-            if (!String.IsNullOrWhiteSpace(text))
+            if (!string.IsNullOrWhiteSpace(text))
                 DateTimeOffsetValue = XmlConvert.ToDateTimeOffset(text);
         }
 

@@ -20,14 +20,14 @@ namespace DanfeSharp.Elementos
             Estilo = estilo;
         }
 
-        public virtual LinhaCampos ComCampo(String cabecalho, String conteudo, AlinhamentoHorizontal alinhamentoHorizontalConteudo = AlinhamentoHorizontal.Esquerda)
+        public virtual LinhaCampos ComCampo(string cabecalho, string conteudo, AlinhamentoHorizontal alinhamentoHorizontalConteudo = AlinhamentoHorizontal.Esquerda)
         {
             var campo = new Campo(cabecalho, conteudo, Estilo, alinhamentoHorizontalConteudo);
             Elementos.Add(campo);
             return this;
         }
 
-        public virtual LinhaCampos ComCampoNumerico(String cabecalho, double? conteudoNumerico, int casasDecimais = 2)
+        public virtual LinhaCampos ComCampoNumerico(string cabecalho, double? conteudoNumerico, int casasDecimais = 2)
         {
             var campo = new CampoNumerico(cabecalho, conteudoNumerico, Estilo, casasDecimais);
             Elementos.Add(campo);

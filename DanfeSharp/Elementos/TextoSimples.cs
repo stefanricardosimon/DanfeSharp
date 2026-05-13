@@ -5,12 +5,12 @@ namespace DanfeSharp
 {
     class TextoSimples : ElementoBase
     {
-        public String Texto { get; private set; }
+        public string Texto { get; private set; }
         public AlinhamentoHorizontal AlinhamentoHorizontal { get; set; }
         public AlinhamentoVertical AlinhamentoVertical { get; set; }
         public float TamanhoFonte { get; set; }     
 
-        public TextoSimples(Estilo estilo, String texto) : base(estilo)
+        public TextoSimples(Estilo estilo, string texto) : base(estilo)
         {
             Texto = texto;
             AlinhamentoHorizontal = AlinhamentoHorizontal.Esquerda;
@@ -23,7 +23,7 @@ namespace DanfeSharp
         {
             base.Draw(gfx);
 
-            if (!String.IsNullOrWhiteSpace(Texto))
+            if (!string.IsNullOrWhiteSpace(Texto))
             {
                 var r = BoundingBox.InflatedRetangle(0.75F);
 

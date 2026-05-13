@@ -44,7 +44,7 @@ namespace DanfeSharp.Graphics
             PrimitiveComposer.SetFont(fonte.FonteInterna, fonte.Tamanho);
         }
 
-        public void ShowText(String text, PointF point)
+        public void ShowText(string text, PointF point)
         {
             CheckPoint(point);
             PrimitiveComposer.ShowText(text, point.ToPointMeasure());

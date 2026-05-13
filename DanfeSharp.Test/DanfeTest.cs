@@ -1,9 +1,5 @@
-﻿using DanfeSharp.Modelo;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Drawing;
-using System.IO;
-using System.Linq;
 
 namespace DanfeSharp.Test
 {
@@ -17,7 +13,7 @@ namespace DanfeSharp.Test
             var model = FabricaFake.DanfeViewModel_1();
             model.Orientacao = Orientacao.Retrato;
             model.ExibirIcmsInterestadual = false;
-            DanfeSharp.Danfe d = new DanfeSharp.Danfe(model);
+            Danfe d = new Danfe(model);
             d.Gerar();
             d.SalvarTestPdf();
         }
@@ -28,7 +24,7 @@ namespace DanfeSharp.Test
             var model = FabricaFake.DanfeViewModel_1();
             model.Orientacao = Orientacao.Paisagem;
             model.ExibirIcmsInterestadual = false;
-            DanfeSharp.Danfe d = new DanfeSharp.Danfe(model);
+            Danfe d = new Danfe(model);
             d.Gerar();
             d.SalvarTestPdf();
         }       
@@ -39,7 +35,7 @@ namespace DanfeSharp.Test
             var model = FabricaFake.DanfeViewModel_1();
             model.Orientacao = Orientacao.Paisagem;
             model.QuantidadeCanhotos = 2;
-            DanfeSharp.Danfe d = new DanfeSharp.Danfe(model);
+            Danfe d = new Danfe(model);
             d.Gerar();
             d.SalvarTestPdf();
         }
@@ -50,7 +46,7 @@ namespace DanfeSharp.Test
             var model = FabricaFake.DanfeViewModel_1();
             model.Orientacao = Orientacao.Retrato;
             model.QuantidadeCanhotos = 2;
-            DanfeSharp.Danfe d = new DanfeSharp.Danfe(model);
+            Danfe d = new Danfe(model);
             d.Gerar();
             d.SalvarTestPdf();
         }
@@ -61,7 +57,7 @@ namespace DanfeSharp.Test
             var model = FabricaFake.DanfeViewModel_1();
             model.Orientacao = Orientacao.Paisagem;
             model.QuantidadeCanhotos = 0;
-            DanfeSharp.Danfe d = new DanfeSharp.Danfe(model);
+            Danfe d = new Danfe(model);
             d.Gerar();
             d.SalvarTestPdf();
         }
@@ -72,7 +68,7 @@ namespace DanfeSharp.Test
             var model = FabricaFake.DanfeViewModel_1();
             model.Orientacao = Orientacao.Retrato;
             model.QuantidadeCanhotos = 0;
-            DanfeSharp.Danfe d = new DanfeSharp.Danfe(model);
+            Danfe d = new Danfe(model);
             d.Gerar();
             d.SalvarTestPdf();
         }
@@ -85,7 +81,7 @@ namespace DanfeSharp.Test
             model.ContingenciaDataHora = DateTime.Now;
             model.ContingenciaJustificativa = "Aqui vai o motivo da contingência";
             model.Orientacao = Orientacao.Retrato;
-            DanfeSharp.Danfe d = new DanfeSharp.Danfe(model);
+            Danfe d = new Danfe(model);
             d.Gerar();
             d.SalvarTestPdf();
         }
@@ -98,7 +94,7 @@ namespace DanfeSharp.Test
             model.ContingenciaDataHora = DateTime.Now;
             model.ContingenciaJustificativa = "Aqui vai o motivo da contingência";
             model.Orientacao = Orientacao.Retrato;
-            DanfeSharp.Danfe d = new DanfeSharp.Danfe(model);
+            Danfe d = new Danfe(model);
             d.Gerar();
             d.SalvarTestPdf();
         }
@@ -108,7 +104,7 @@ namespace DanfeSharp.Test
         {
             var model = FabricaFake.DanfeViewModel_1();
             model.Orientacao = Orientacao.Retrato;
-            DanfeSharp.Danfe d = new DanfeSharp.Danfe(model);       
+            Danfe d = new Danfe(model);       
             d.Gerar();
             d.SalvarTestPdf();
         }
@@ -119,7 +115,7 @@ namespace DanfeSharp.Test
             var model = FabricaFake.DanfeViewModel_1();
             model.Orientacao = Orientacao.Retrato;
             model.PreferirEmitenteNomeFantasia = false;
-            DanfeSharp.Danfe d = new DanfeSharp.Danfe(model);
+            Danfe d = new Danfe(model);
             d.Gerar();
             d.SalvarTestPdf();
         }
@@ -129,7 +125,7 @@ namespace DanfeSharp.Test
         {
             var model = FabricaFake.DanfeViewModel_1();
             model.Orientacao = Orientacao.Paisagem;
-            DanfeSharp.Danfe d = new DanfeSharp.Danfe(model);
+            Danfe d = new Danfe(model);
             d.Gerar();
             d.SalvarTestPdf();
         }
@@ -140,7 +136,7 @@ namespace DanfeSharp.Test
             var model = FabricaFake.DanfeViewModel_1();
             model.TipoAmbiente = 2;
             model.Orientacao = Orientacao.Retrato;
-            DanfeSharp.Danfe d = new DanfeSharp.Danfe(model);
+            Danfe d = new Danfe(model);
             d.Gerar();
             d.SalvarTestPdf();
         }
@@ -151,7 +147,7 @@ namespace DanfeSharp.Test
             var model = FabricaFake.DanfeViewModel_1();
             model.TipoAmbiente = 2;
             model.Orientacao = Orientacao.Paisagem;
-            DanfeSharp.Danfe d = new DanfeSharp.Danfe(model);
+            Danfe d = new Danfe(model);
             d.Gerar();
             d.SalvarTestPdf();
         }
@@ -161,7 +157,7 @@ namespace DanfeSharp.Test
         {
             var model = FabricaFake.DanfeViewModel_1();
             model.LocalEntrega = FabricaFake.LocalEntregaRetiradaFake();
-            DanfeSharp.Danfe d = new DanfeSharp.Danfe(model);
+            Danfe d = new Danfe(model);
             d.Gerar();
             d.SalvarTestPdf();
         }
@@ -171,7 +167,7 @@ namespace DanfeSharp.Test
         {
             var model = FabricaFake.DanfeViewModel_1();
             model.LocalRetirada = FabricaFake.LocalEntregaRetiradaFake();
-            DanfeSharp.Danfe d = new DanfeSharp.Danfe(model);
+            Danfe d = new Danfe(model);
             d.Gerar();
             d.SalvarTestPdf();
         }
