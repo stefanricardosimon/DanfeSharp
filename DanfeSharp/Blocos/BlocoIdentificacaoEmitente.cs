@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Text.RegularExpressions;
 using org.pdfclown.documents.contents.xObjects;
 using DanfeSharp.Modelo;
 
@@ -24,7 +25,10 @@ namespace DanfeSharp.Blocos
             };
 
             var campoChaveAcesso = new Campo("Chave de Acesso", Formatador.FormatarChaveAcesso(ViewModel.ChaveAcesso), estilo, AlinhamentoHorizontal.Centro) { Height = Constantes.CampoAltura };
-            var codigoBarras = new Barcode128C(viewModel.ChaveAcesso, Estilo) { Height = AlturaLinha1 - textoConsulta.Height - campoChaveAcesso.Height };
+
+            Barcode128Base codigoBarras = Regex.IsMatch(viewModel.ChaveAcesso, @"^\d+$") ? (Barcode128Base)new Barcode128C(viewModel.ChaveAcesso, Estilo) : new Barcode128A(viewModel.ChaveAcesso, Estilo);
+
+            codigoBarras.Height = AlturaLinha1 - textoConsulta.Height - campoChaveAcesso.Height;
 
             var coluna3 = new VerticalStack();
             coluna3.Add(codigoBarras, campoChaveAcesso, textoConsulta);
