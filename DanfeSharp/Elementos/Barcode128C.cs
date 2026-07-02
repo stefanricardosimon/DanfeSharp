@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 namespace DanfeSharp
 {
     /// <summary>
-    /// Desenha o Código de Barras Code 128C
+    /// Desenha o código de barras em Code128C.
     /// </summary>
     internal class Barcode128C : Barcode128Base
     {

@@ -4,9 +4,7 @@ using System.Collections.Generic;
 namespace DanfeSharp
 {
     /// <summary>
-    /// Desenha o Código de Barras Code 128, alternando entre os subconjuntos A e C
-    /// para representar de forma compacta tanto letras quanto sequências de dígitos
-    /// (usado para a Chave de Acesso quando o CNPJ alfanumérico é utilizado).
+    /// Desenha o código de barras em Code128A.
     /// </summary>
     internal class Barcode128A : Barcode128Base
     {

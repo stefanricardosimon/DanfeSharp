@@ -5,7 +5,7 @@ using DanfeSharp.Graphics;
 namespace DanfeSharp
 {
     /// <summary>
-    /// Base para o desenho de Códigos de Barra padrão Code 128.
+    /// Base para o desenho de código de barra em padrão Code 128.
     /// </summary>
     internal abstract class Barcode128Base : ElementoBase
     {
@@ -26,7 +26,7 @@ namespace DanfeSharp
         public const float LarguraAutomatica = -1F;
 
         /// <summary>
-        /// Código a ser codificado em barras.
+        /// Código a ser desenhado.
         /// </summary>
         public string Code { get; protected set; }
 
@@ -155,8 +155,7 @@ namespace DanfeSharp
         }
 
         /// <summary>
-        /// Monta a lista de valores (símbolos) que serão codificados em barras,
-        /// incluindo o caracter de início, o dígito verificador e o caracter de parada.
+        /// Monta a lista de valores (símbolos) que serão desenhados, incluindo o caractere de início, o dígito verificador e o caractere de parada.
         /// </summary>
         protected abstract List<byte> MontarCodeBytes();
 
