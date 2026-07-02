@@ -62,6 +62,8 @@
     <Compile Include="Constantes.cs" />
     <Compile Include="Danfe.cs" />
     <Compile Include="DanfePagina.cs" />
+    <Compile Include="Elementos\Barcode128A.cs" />
+    <Compile Include="Elementos\Barcode128Base.cs" />
     <Compile Include="Elementos\Barcode128C.cs" />
     <Compile Include="Elementos\CabecalhoBloco.cs" />
     <Compile Include="Elementos\Campo.cs" />
