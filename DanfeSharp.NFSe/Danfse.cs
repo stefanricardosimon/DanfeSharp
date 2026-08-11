@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using DanfeSharp;
 using DanfeSharp.NFSe.Blocos;
+using DanfeSharp.NFSe.Interno;
 using DanfeSharp.NFSe.Modelo;
 using org.pdfclown.documents;
 using org.pdfclown.documents.contents.composition;
@@ -155,15 +155,15 @@ namespace DanfeSharp.NFSe
             var page = new Page(PdfDocument);
             PdfDocument.Pages.Add(page);
 
-            var retangulo = new RectangleF(0, 0, DanfeSharp.Constantes.A4Largura, DanfeSharp.Constantes.A4Altura);
+            var retangulo = new RectangleF(0, 0, Constantes.A4Largura, Constantes.A4Altura);
             var retanguloDesenhavel = retangulo.InflatedRetangle(Margem);
 
             page.Size = new SizeF(retangulo.Width.ToPoint(), retangulo.Height.ToPoint());
 
             var primitiveComposer = new PrimitiveComposer(page);
-            var gfx = new DanfeSharp.Graphics.Gfx(primitiveComposer);
+            var gfx = new Gfx(primitiveComposer);
 
-            var corpo = new DanfeSharp.VerticalStack { Width = retanguloDesenhavel.Width };
+            var corpo = new VerticalStack { Width = retanguloDesenhavel.Width };
             foreach (var bloco in _blocos)
             {
                 corpo.Add(bloco);
@@ -190,7 +190,7 @@ namespace DanfeSharp.NFSe
         /// DANFSe é muito estreita (item 2.2.2 do manual, 0,15 a 0,20 cm) para conter texto legível fora
         /// da borda da página, a informação é desenhada por dentro da borda, sem sobrepor nenhum campo.
         /// </summary>
-        private void DesenharCreditos(DanfeSharp.Graphics.Gfx gfx, RectangleF retanguloDesenhavel)
+        private void DesenharCreditos(Gfx gfx, RectangleF retanguloDesenhavel)
         {
             var fonte = _estiloPadrao.CriarFonteItalico(6);
             var texto = "Gerado em " + DateTime.Now.ToString("dd/MM/yyyy") + ", " + DateTime.Now.ToString("HH:mm:ss");
@@ -201,18 +201,18 @@ namespace DanfeSharp.NFSe
                 retanguloDesenhavel.Width - 1F,
                 fonte.AlturaLinha);
 
-            gfx.DrawString(texto, r, fonte, DanfeSharp.AlinhamentoHorizontal.Direita);
+            gfx.DrawString(texto, r, fonte, AlinhamentoHorizontal.Direita);
         }
 
-        private void DesenharMarcaDagua(DanfeSharp.Graphics.Gfx gfx, RectangleF retanguloCorpo)
+        private void DesenharMarcaDagua(Gfx gfx, RectangleF retanguloCorpo)
         {
             string texto = ViewModel.Cancelada ? "CANCELADA" : ViewModel.Substituida ? "SUBSTITUÍDA" : null;
             if (texto == null) return;
 
-            var ts = new DanfeSharp.TextStack(retanguloCorpo)
+            var ts = new TextStack(retanguloCorpo)
             {
-                AlinhamentoVertical = DanfeSharp.AlinhamentoVertical.Centro,
-                AlinhamentoHorizontal = DanfeSharp.AlinhamentoHorizontal.Centro
+                AlinhamentoVertical = AlinhamentoVertical.Centro,
+                AlinhamentoHorizontal = AlinhamentoHorizontal.Centro
             }.AddLine(texto, _estiloPadrao.CriarFonteRegular(70));
 
             gfx.PrimitiveComposer.BeginLocalState();

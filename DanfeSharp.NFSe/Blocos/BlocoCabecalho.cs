@@ -1,6 +1,6 @@
 using org.pdfclown.documents.contents.xObjects;
-using DanfeSharp;
 using DanfeSharp.NFSe.Elementos;
+using DanfeSharp.NFSe.Interno;
 using DanfeSharp.NFSe.Modelo;
 
 namespace DanfeSharp.NFSe.Blocos

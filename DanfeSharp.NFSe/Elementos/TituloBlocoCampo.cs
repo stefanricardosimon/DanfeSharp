@@ -1,5 +1,4 @@
-using DanfeSharp;
-using DanfeSharp.Graphics;
+using DanfeSharp.NFSe.Interno;
 
 namespace DanfeSharp.NFSe.Elementos
 {

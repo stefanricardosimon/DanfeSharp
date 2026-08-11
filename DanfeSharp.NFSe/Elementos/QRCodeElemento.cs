@@ -1,6 +1,6 @@
 using System;
 using System.Drawing;
-using DanfeSharp.Graphics;
+using DanfeSharp.NFSe.Interno;
 using QRCoder;
 
 namespace DanfeSharp.NFSe.Elementos
@@ -9,12 +9,12 @@ namespace DanfeSharp.NFSe.Elementos
     /// Desenha um código de barras bidimensional (QR Code) para consulta pública da NFS-e,
     /// conforme o item 2.4.3 do manual (dimensões mínimas de 1,52 cm x 1,52 cm).
     /// </summary>
-    internal class QRCodeElemento : DanfeSharp.ElementoBase
+    internal class QRCodeElemento : ElementoBase
     {
         private readonly bool[][] _modulos;
         private readonly int _quantidadeModulos;
 
-        public QRCodeElemento(string conteudo, DanfeSharp.Estilo estilo) : base(estilo)
+        public QRCodeElemento(string conteudo, Estilo estilo) : base(estilo)
         {
             if (string.IsNullOrWhiteSpace(conteudo)) throw new ArgumentException(nameof(conteudo));
 

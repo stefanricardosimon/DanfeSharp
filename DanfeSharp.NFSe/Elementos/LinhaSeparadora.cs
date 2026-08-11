@@ -1,7 +1,6 @@
 using System;
 using System.Drawing;
-using DanfeSharp;
-using DanfeSharp.Graphics;
+using DanfeSharp.NFSe.Interno;
 
 namespace DanfeSharp.NFSe.Elementos
 {

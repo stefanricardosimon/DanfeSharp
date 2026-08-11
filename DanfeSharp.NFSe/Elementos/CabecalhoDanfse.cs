@@ -1,6 +1,5 @@
 using System.Drawing;
-using DanfeSharp;
-using DanfeSharp.Graphics;
+using DanfeSharp.NFSe.Interno;
 using DanfeSharp.NFSe.Modelo;
 using org.pdfclown.documents.contents.colorSpaces;
 using org.pdfclown.documents.contents.xObjects;

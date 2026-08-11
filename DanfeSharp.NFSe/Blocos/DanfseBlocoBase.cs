@@ -1,8 +1,6 @@
 using System;
-using DanfeSharp;
-using DanfeSharp.Elementos;
-using DanfeSharp.Graphics;
 using DanfeSharp.NFSe.Elementos;
+using DanfeSharp.NFSe.Interno;
 using DanfeSharp.NFSe.Modelo;
 
 namespace DanfeSharp.NFSe.Blocos
