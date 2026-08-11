@@ -73,7 +73,7 @@ namespace DanfeSharp.NFSe.Elementos
             var fDireita1 = Estilo.CriarFonteRegular(8);
             var fDireita2 = Estilo.CriarFonteRegular(6);
 
-            var tsDireita = new TextStack(rDireita) { AlinhamentoHorizontal = AlinhamentoHorizontal.Esquerda, AlinhamentoVertical = AlinhamentoVertical.Topo, LineHeightScale = 1.15F };
+            var tsDireita = new TextStack(rDireita) { AlinhamentoHorizontal = AlinhamentoHorizontal.Esquerda, AlinhamentoVertical = AlinhamentoVertical.Centro, LineHeightScale = 1.15F };
             tsDireita.AddLine("Município: " + ViewModel.MunicipioEmitente, fDireita1);
             tsDireita.AddLine("Ambiente Gerador: " + ViewModel.AmbienteGerador, fDireita2);
             tsDireita.AddLine("Tipo de Ambiente: " + ViewModel.TipoAmbiente, fDireita2);

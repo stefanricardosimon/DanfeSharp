@@ -69,8 +69,21 @@ namespace DanfeSharp.NFSe
 
             MontarBlocos();
             AdicionarMetadata();
+            CarregarLogoPadrao();
 
             _foiGerado = false;
+        }
+
+        /// <summary>
+        /// Carrega, no canto esquerdo do cabeçalho, a logomarca padrão da NFS-e (item 2.4.3 do manual).
+        /// Pode ser substituída por <see cref="AdicionarLogoImagem(System.IO.Stream)"/>.
+        /// </summary>
+        private void CarregarLogoPadrao()
+        {
+            using (var stream = DanfeSharp.NFSe.Elementos.LogoPadrao.CarregarComoJpeg())
+            {
+                if (stream != null) AdicionarLogoImagem(stream);
+            }
         }
 
         private void MontarBlocos()
@@ -102,7 +115,9 @@ namespace DanfeSharp.NFSe
         }
 
         /// <summary>
-        /// Define a logomarca da NFS-e a ser exibida no cabeçalho, a partir de uma imagem (JPEG não progressivo).
+        /// Substitui a logomarca padrão exibida no canto esquerdo do cabeçalho por uma imagem própria
+        /// (JPEG não progressivo). O item 2.4.3 do manual prevê a logomarca da NFS-e nesse local; use
+        /// este método apenas se o seu cenário justificar uma logomarca diferente da padrão.
         /// </summary>
         public void AdicionarLogoImagem(System.IO.Stream stream)
         {
@@ -161,12 +176,32 @@ namespace DanfeSharp.NFSe
             // que as linhas divisórias dos blocos de conteúdo (0,5 ponto).
             gfx.StrokeRectangle(retanguloDesenhavel, EspessuraBordaPagina);
 
+            DesenharCreditos(gfx, retanguloDesenhavel);
             DesenharMarcaDagua(gfx, retanguloDesenhavel);
 
             gfx.Stroke();
             gfx.Flush();
 
             _foiGerado = true;
+        }
+
+        /// <summary>
+        /// Desenha a data e hora de geração no canto inferior direito, como no DANFE. Como a margem do
+        /// DANFSe é muito estreita (item 2.2.2 do manual, 0,15 a 0,20 cm) para conter texto legível fora
+        /// da borda da página, a informação é desenhada por dentro da borda, sem sobrepor nenhum campo.
+        /// </summary>
+        private void DesenharCreditos(DanfeSharp.Graphics.Gfx gfx, RectangleF retanguloDesenhavel)
+        {
+            var fonte = _estiloPadrao.CriarFonteItalico(6);
+            var texto = "Gerado em " + DateTime.Now.ToString("dd/MM/yyyy") + ", " + DateTime.Now.ToString("HH:mm:ss");
+
+            var r = new RectangleF(
+                retanguloDesenhavel.X,
+                retanguloDesenhavel.Bottom - fonte.AlturaLinha - 1F,
+                retanguloDesenhavel.Width - 1F,
+                fonte.AlturaLinha);
+
+            gfx.DrawString(texto, r, fonte, DanfeSharp.AlinhamentoHorizontal.Direita);
         }
 
         private void DesenharMarcaDagua(DanfeSharp.Graphics.Gfx gfx, RectangleF retanguloCorpo)

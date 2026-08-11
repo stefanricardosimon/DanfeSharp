@@ -24,4 +24,10 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
 
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\LogoNFSe.png">
+      <LogicalName>DanfeSharp.NFSe.Resources.LogoNFSe.png</LogicalName>
+    </EmbeddedResource>
+  </ItemGroup>
+
 </Project>
