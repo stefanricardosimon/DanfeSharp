@@ -166,7 +166,7 @@ namespace DanfeSharp.NFSe.Modelo
 
             p.CnpjCpfNif = Formatador.FormatarCpfCnpj(prest.CnpjCpfNif);
             p.IndicadorMunicipal = Traco(prest.IM);
-            p.Telefone = Formatador.FormatarTelefone(!string.IsNullOrWhiteSpace(prest.fone) ? prest.fone : emit?.fone);
+            p.Telefone = Traco(Formatador.FormatarTelefone(!string.IsNullOrWhiteSpace(prest.fone) ? prest.fone : emit?.fone));
             p.NomeRazaoSocial = Traco(!string.IsNullOrWhiteSpace(prest.xNome) ? prest.xNome : emit?.xNome);
             p.Email = Traco(!string.IsNullOrWhiteSpace(prest.email) ? prest.email : emit?.email);
 
@@ -202,7 +202,7 @@ namespace DanfeSharp.NFSe.Modelo
 
             t.CnpjCpfNif = Formatador.FormatarCpfCnpj(toma.CnpjCpfNif);
             t.IndicadorMunicipal = Traco(toma.IM);
-            t.Telefone = Formatador.FormatarTelefone(toma.fone);
+            t.Telefone = Traco(Formatador.FormatarTelefone(toma.fone));
             t.NomeRazaoSocial = Traco(toma.xNome);
             t.MunicipioUf = MunicipioUf(toma.end, resolverMunicipio);
             t.CodigoIbgeCep = CodigoIbgeCep(toma.end);
@@ -221,7 +221,7 @@ namespace DanfeSharp.NFSe.Modelo
             if (dest == null) return;
 
             d.CnpjCpfNif = Formatador.FormatarCpfCnpj(dest.CnpjCpfNif);
-            d.Telefone = Formatador.FormatarTelefone(dest.fone);
+            d.Telefone = Traco(Formatador.FormatarTelefone(dest.fone));
             d.NomeRazaoSocial = Traco(dest.xNome);
             d.MunicipioUf = MunicipioUf(dest.end, resolverMunicipio);
             d.CodigoIbgeCep = CodigoIbgeCep(dest.end);
@@ -237,7 +237,7 @@ namespace DanfeSharp.NFSe.Modelo
 
             i.CnpjCpfNif = Formatador.FormatarCpfCnpj(interm.CnpjCpfNif);
             i.IndicadorMunicipal = Traco(interm.IM);
-            i.Telefone = Formatador.FormatarTelefone(interm.fone);
+            i.Telefone = Traco(Formatador.FormatarTelefone(interm.fone));
             i.NomeRazaoSocial = Traco(interm.xNome);
             i.MunicipioUf = MunicipioUf(interm.end, resolverMunicipio);
             i.CodigoIbgeCep = CodigoIbgeCep(interm.end);

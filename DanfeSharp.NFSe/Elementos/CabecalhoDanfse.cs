@@ -54,7 +54,13 @@ namespace DanfeSharp.NFSe.Elementos
 
             var fTitulo = Estilo.CriarFonteNegrito(9);
 
-            var tsCentro = new TextStack(rCentro) { LineHeightScale = 1.1F };
+            // Quando há aviso de homologação, reserva-se a faixa inferior (altura do aviso + uma pequena
+            // margem) antes de centralizar o título, para que ele não fique colado no aviso em vermelho.
+            const float GapAvisoTitulo = 1F;
+            var alturaAviso = ViewModel.Homologacao ? fTitulo.AlturaLinha + GapAvisoTitulo : 0F;
+            var rTitulo = rCentro.CutBottom(alturaAviso);
+
+            var tsCentro = new TextStack(rTitulo) { LineHeightScale = 1.1F };
             tsCentro.AddLine("DANFSe v2.0", fTitulo);
             tsCentro.AddLine("Documento Auxiliar da NFS-e", fTitulo);
             tsCentro.Draw(gfx);
