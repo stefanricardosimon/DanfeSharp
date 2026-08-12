@@ -127,7 +127,10 @@ namespace DanfeSharp.NFSe.Modelo
             model.AmbienteGerador = infNFSe.ambGer;
             model.TipoAmbiente = infDPS.tpAmb;
             model.Homologacao = infDPS.tpAmb == "2";
-            model.UrlConsultaPublica = "https://www.nfse.gov.br/ConsultaPublica/?tpc=1&chave=" + model.ChaveAcesso;
+
+            // Em ambiente de produção restrita (tpAmb == "2"), a consulta pública deve apontar para o host de homologação.
+            var hostConsultaPublica = model.Homologacao ? "www.producaorestrita.nfse.gov.br" : "www.nfse.gov.br";
+            model.UrlConsultaPublica = $"https://{hostConsultaPublica}/ConsultaPublica/?tpc=1&chave=" + model.ChaveAcesso;
         }
 
         private static string SemPrefixoNFS(string id)
