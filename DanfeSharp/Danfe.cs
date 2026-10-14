@@ -61,12 +61,17 @@ namespace DanfeSharp
             if (ViewModel.Duplicatas.Count > 0)
                 AdicionarBloco<BlocoDuplicataFatura>();
 
-            AdicionarBloco<BlocoCalculoImposto>(ViewModel.Orientacao == Orientacao.Paisagem ? EstiloPadrao : CriarEstilo(4.75F));
+            // NT 2026.010: os totais são divididos em três blocos e o cálculo do ISSQN passa a ficar entre eles e o transportador.
+            var estiloTotais = ViewModel.Orientacao == Orientacao.Paisagem ? EstiloPadrao : CriarEstilo(4.75F);
+            AdicionarBloco<BlocoTotalProdutosNota>(estiloTotais);
+            AdicionarBloco<BlocoTotalIcmsIpi>(estiloTotais);
+            AdicionarBloco<BlocoTotalIbsCbsIs>(estiloTotais);
+
+            if (ViewModel.CalculoIssqn.Mostrar)
+                AdicionarBloco<BlocoCalculoIssqn>();
+
             AdicionarBloco<BlocoTransportador>();
             AdicionarBloco<BlocoDadosAdicionais>(CriarEstilo(tFonteCampoConteudo: 8));
-
-            if(ViewModel.CalculoIssqn.Mostrar)
-                AdicionarBloco<BlocoCalculoIssqn>();
 
             AdicionarMetadata();
 

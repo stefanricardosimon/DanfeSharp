@@ -46,6 +46,12 @@ namespace DanfeSharp.Test
         public void v4_QuebraLinha() => TestXml("v4.00/v4_QuebraLinha.xml");
 
         [TestMethod]
+        public void v4_IbsCbs() => TestXml("v4.00/v4_IbsCbs.xml");
+
+        [TestMethod]
+        public void v4_IbsCbs_Paisagem() => TestXml("v4.00/v4_IbsCbs_Paisagem.xml");
+
+        [TestMethod]
         public void v5_Dados() => TestXml("v4.00/v4_Dados.xml");
     }
 }

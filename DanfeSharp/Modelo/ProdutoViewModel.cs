@@ -68,19 +68,19 @@ namespace DanfeSharp.Modelo
         /// <para>Valor da BC do ICMS</para>
         /// <para>Tag vBC</para>
         /// </summary>
-        public double BaseIcms { get; set; }
+        public double? BaseIcms { get; set; }
 
         /// <summary>
         /// <para>Valor do ICMS</para>
         /// <para>Tag vICMS</para>
         /// </summary>
-        public double ValorIcms { get; set; }
+        public double? ValorIcms { get; set; }
 
         /// <summary>
         /// <para>Alíquota do imposto</para>
         /// <para>Tag pICMS</para>
         /// </summary>
-        public double AliquotaIcms { get; set; }
+        public double? AliquotaIcms { get; set; }
 
         /// <summary>
         /// <para>Valor do IPI</para>
@@ -93,6 +93,79 @@ namespace DanfeSharp.Modelo
         /// <para>Tag pIPI</para>
         /// </summary>
         public double? AliquotaIpi { get; set; }
+
+        /// <summary>
+        /// <para>Valor da BC do IPI</para>
+        /// <para>Tag vBC do grupo IPITrib</para>
+        /// </summary>
+        public double? BaseIpi { get; set; }
+
+        #region Reforma Tributária (NT 2025.002 / NT 2026.010)
+
+        /// <summary>
+        /// <para>Código de Classificação Tributária do IBS e CBS</para>
+        /// <para>Tag cClassTrib (UB14)</para>
+        /// </summary>
+        public string ClassificacaoTributariaIbsCbs { get; set; }
+
+        /// <summary>
+        /// <para>Base de cálculo do IBS e da CBS</para>
+        /// <para>Tag vBC do grupo gIBSCBS (UB16)</para>
+        /// </summary>
+        public double? BaseIbsCbs { get; set; }
+
+        /// <summary>
+        /// <para>Alíquota do IBS da UF. É a alíquota efetiva (pAliqEfet) quando existe redução de alíquota, caso contrário a alíquota vigente (pIBSUF).</para>
+        /// </summary>
+        public double? AliquotaIbsUf { get; set; }
+
+        /// <summary>
+        /// <para>Valor do IBS da UF</para>
+        /// <para>Tag vIBSUF (UB35)</para>
+        /// </summary>
+        public double? ValorIbsUf { get; set; }
+
+        /// <summary>
+        /// <para>Alíquota do IBS do Município. É a alíquota efetiva (pAliqEfet) quando existe redução de alíquota, caso contrário a alíquota vigente (pIBSMun).</para>
+        /// </summary>
+        public double? AliquotaIbsMun { get; set; }
+
+        /// <summary>
+        /// <para>Valor do IBS do Município</para>
+        /// <para>Tag vIBSMun (UB54)</para>
+        /// </summary>
+        public double? ValorIbsMun { get; set; }
+
+        /// <summary>
+        /// <para>Alíquota da CBS. É a alíquota efetiva (pAliqEfet) quando existe redução de alíquota, caso contrário a alíquota vigente (pCBS).</para>
+        /// </summary>
+        public double? AliquotaCbs { get; set; }
+
+        /// <summary>
+        /// <para>Valor da CBS</para>
+        /// <para>Tag vCBS (UB67)</para>
+        /// </summary>
+        public double? ValorCbs { get; set; }
+
+        /// <summary>
+        /// <para>Base de cálculo do Imposto Seletivo</para>
+        /// <para>Tag vBCIS (UB05)</para>
+        /// </summary>
+        public double? BaseIs { get; set; }
+
+        /// <summary>
+        /// <para>Alíquota do Imposto Seletivo</para>
+        /// <para>Tag pIS (UB06)</para>
+        /// </summary>
+        public double? AliquotaIs { get; set; }
+
+        /// <summary>
+        /// <para>Valor do Imposto Seletivo</para>
+        /// <para>Tag vIS (UB11)</para>
+        /// </summary>
+        public double? ValorIs { get; set; }
+
+        #endregion
 
         /// <summary>
         /// <para>Valor aproximado total de tributos federais, estaduais e municipais. [NT2013.003]</para>

@@ -16,7 +16,7 @@ namespace DanfeSharp.Blocos
                 .ComLargurasIguais();
         }
 
-        public override PosicaoBloco Posicao => PosicaoBloco.Base;
+        public override PosicaoBloco Posicao => PosicaoBloco.Topo;
         public override string Cabecalho => "CÁLCULO DO ISSQN";
     }
 }

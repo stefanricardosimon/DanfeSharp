@@ -237,9 +237,9 @@ namespace DanfeSharp.Esquemas.NFe
         public string orig { get; set; }
         public string CST { get; set; }
         public string CSOSN { get; set; }
-        public double vBC { get; set; }
-        public double pICMS { get; set; }
-        public double vICMS { get; set; }
+        public double? vBC { get; set; }
+        public double? pICMS { get; set; }
+        public double? vICMS { get; set; }
     }
 
     public class ImpostoICMS00 : ImpostoICMS { }
@@ -320,6 +320,91 @@ namespace DanfeSharp.Esquemas.NFe
         public string vTotTrib { get; set; }
         public ProdutoICMS ICMS { get; set; }
         public ProdutoIPI IPI { get; set; }
+
+        /// <summary>
+        /// Informações do Imposto Seletivo (UB01). NT 2025.002
+        /// </summary>
+        public ImpostoSeletivo IS { get; set; }
+
+        /// <summary>
+        /// Informações do IBS e da CBS (UB12). NT 2025.002
+        /// </summary>
+        public ImpostoIBSCBS IBSCBS { get; set; }
+    }
+
+    /// <summary>
+    /// Imposto Seletivo do item (UB01). NT 2025.002
+    /// </summary>
+    [Serializable]
+    [XmlType(AnonymousType = true, Namespace = Namespaces.NFe)]
+    public partial class ImpostoSeletivo
+    {
+        public string CSTIS { get; set; }
+        public string cClassTribIS { get; set; }
+        public double? vBCIS { get; set; }
+        public double? pIS { get; set; }
+        public double? vIS { get; set; }
+    }
+
+    /// <summary>
+    /// IBS e CBS do item (UB12). NT 2025.002
+    /// </summary>
+    [Serializable]
+    [XmlType(AnonymousType = true, Namespace = Namespaces.NFe)]
+    public partial class ImpostoIBSCBS
+    {
+        public string CST { get; set; }
+        public string cClassTrib { get; set; }
+        public GrupoIBSCBS gIBSCBS { get; set; }
+    }
+
+    [Serializable]
+    [XmlType(AnonymousType = true, Namespace = Namespaces.NFe)]
+    public partial class GrupoIBSCBS
+    {
+        public double? vBC { get; set; }
+        public GrupoIBSUF gIBSUF { get; set; }
+        public GrupoIBSMun gIBSMun { get; set; }
+        public double? vIBS { get; set; }
+        public GrupoCBS gCBS { get; set; }
+    }
+
+    /// <summary>
+    /// Grupo de redução de alíquota (gRed). Quando informado, o DANFE exibe a alíquota efetiva.
+    /// </summary>
+    [Serializable]
+    [XmlType(AnonymousType = true, Namespace = Namespaces.NFe)]
+    public partial class ReducaoAliquota
+    {
+        public double? pRedAliq { get; set; }
+        public double? pAliqEfet { get; set; }
+    }
+
+    [Serializable]
+    [XmlType(AnonymousType = true, Namespace = Namespaces.NFe)]
+    public partial class GrupoIBSUF
+    {
+        public double? pIBSUF { get; set; }
+        public ReducaoAliquota gRed { get; set; }
+        public double? vIBSUF { get; set; }
+    }
+
+    [Serializable]
+    [XmlType(AnonymousType = true, Namespace = Namespaces.NFe)]
+    public partial class GrupoIBSMun
+    {
+        public double? pIBSMun { get; set; }
+        public ReducaoAliquota gRed { get; set; }
+        public double? vIBSMun { get; set; }
+    }
+
+    [Serializable]
+    [XmlType(AnonymousType = true, Namespace = Namespaces.NFe)]
+    public partial class GrupoCBS
+    {
+        public double? pCBS { get; set; }
+        public ReducaoAliquota gRed { get; set; }
+        public double? vCBS { get; set; }
     }
 
     /// <summary>
@@ -518,6 +603,99 @@ namespace DanfeSharp.Esquemas.NFe
 
 
         public double? vTotTrib { get; set; }
+
+        /// <summary>
+        /// Valor total do FCP (W04h)
+        /// </summary>
+        public double? vFCP { get; set; }
+
+        /// <summary>
+        /// Valor total do FCP retido por substituição tributária (W06a)
+        /// </summary>
+        public double? vFCPST { get; set; }
+
+        /// <summary>
+        /// Quantidade tributada do ICMS monofásico próprio (W06b.1)
+        /// </summary>
+        public double? qBCMono { get; set; }
+
+        /// <summary>
+        /// Valor total do ICMS monofásico próprio (W06c)
+        /// </summary>
+        public double? vICMSMono { get; set; }
+
+        /// <summary>
+        /// Quantidade tributada do ICMS monofásico sujeito a retenção (W06c.1)
+        /// </summary>
+        public double? qBCMonoReten { get; set; }
+
+        /// <summary>
+        /// Valor total do ICMS monofásico sujeito a retenção (W06d)
+        /// </summary>
+        public double? vICMSMonoReten { get; set; }
+    }
+
+    /// <summary>
+    /// Total do Imposto Seletivo (W31). NT 2025.002
+    /// </summary>
+    [Serializable]
+    [XmlType(AnonymousType = true, Namespace = Namespaces.NFe)]
+    public partial class ISTotal
+    {
+        public double? vIS { get; set; }
+    }
+
+    /// <summary>
+    /// Totais do IBS e da CBS (W34). NT 2025.002
+    /// </summary>
+    [Serializable]
+    [XmlType(AnonymousType = true, Namespace = Namespaces.NFe)]
+    public partial class IBSCBSTotal
+    {
+        public double? vBCIBSCBS { get; set; }
+        public TotalIBS gIBS { get; set; }
+        public TotalCBS gCBS { get; set; }
+        public TotalMonofasia gMono { get; set; }
+    }
+
+    [Serializable]
+    [XmlType(AnonymousType = true, Namespace = Namespaces.NFe)]
+    public partial class TotalIBS
+    {
+        public TotalIBSUF gIBSUF { get; set; }
+        public TotalIBSMun gIBSMun { get; set; }
+        public double? vIBS { get; set; }
+    }
+
+    [Serializable]
+    [XmlType(AnonymousType = true, Namespace = Namespaces.NFe)]
+    public partial class TotalIBSUF
+    {
+        public double? vIBSUF { get; set; }
+    }
+
+    [Serializable]
+    [XmlType(AnonymousType = true, Namespace = Namespaces.NFe)]
+    public partial class TotalIBSMun
+    {
+        public double? vIBSMun { get; set; }
+    }
+
+    [Serializable]
+    [XmlType(AnonymousType = true, Namespace = Namespaces.NFe)]
+    public partial class TotalCBS
+    {
+        public double? vCBS { get; set; }
+    }
+
+    [Serializable]
+    [XmlType(AnonymousType = true, Namespace = Namespaces.NFe)]
+    public partial class TotalMonofasia
+    {
+        public double? vIBSMono { get; set; }
+        public double? vCBSMono { get; set; }
+        public double? vIBSMonoReten { get; set; }
+        public double? vCBSMonoReten { get; set; }
     }
 
     /// <summary>
@@ -541,6 +719,8 @@ namespace DanfeSharp.Esquemas.NFe
     {
         public ICMSTotal ICMSTot { get; set; }
         public ISSQNTotal ISSQNtot { get; set; }
+        public ISTotal ISTot { get; set; }
+        public IBSCBSTotal IBSCBSTot { get; set; }
     }
 
 

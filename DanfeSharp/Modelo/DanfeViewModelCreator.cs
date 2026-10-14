@@ -186,8 +186,97 @@ namespace DanfeSharp.Modelo
                 ValorTotalNota = i.vNF,
                 vFCPUFDest = i.vFCPUFDest,
                 vICMSUFDest = i.vICMSUFDest,
-                vICMSUFRemet = i.vICMSUFRemet
+                vICMSUFRemet = i.vICMSUFRemet,
+                vFCP = i.vFCP,
+                vFCPST = i.vFCPST,
+                QuantidadeIcmsMonofasico = i.qBCMono,
+                ValorIcmsMonofasico = i.vICMSMono,
+                QuantidadeIcmsMonofasicoRetencao = i.qBCMonoReten,
+                ValorIcmsMonofasicoRetencao = i.vICMSMonoReten
             };
+        }
+
+        /// <summary>
+        /// Alíquota a ser impressa (NT 2026.010, item 4.3): a efetiva (pAliqEfet) quando o grupo gRed é informado,
+        /// caso contrário a alíquota vigente.
+        /// </summary>
+        private static double? AliquotaExibida(double? aliquotaVigente, ReducaoAliquota gRed)
+        {
+            return gRed?.pAliqEfet ?? aliquotaVigente;
+        }
+
+        /// <summary>
+        /// Preenche os dados do IBS, CBS e Imposto Seletivo do item. Grupos ausentes no XML permanecem nulos.
+        /// </summary>
+        internal static void PreencherReformaTributaria(ProdutoViewModel produto, ProdutoImposto imposto)
+        {
+            var ibsCbs = imposto.IBSCBS;
+
+            if (ibsCbs != null)
+            {
+                produto.ClassificacaoTributariaIbsCbs = ibsCbs.cClassTrib;
+
+                var g = ibsCbs.gIBSCBS;
+
+                if (g != null)
+                {
+                    produto.BaseIbsCbs = g.vBC;
+
+                    if (g.gIBSUF != null)
+                    {
+                        produto.AliquotaIbsUf = AliquotaExibida(g.gIBSUF.pIBSUF, g.gIBSUF.gRed);
+                        produto.ValorIbsUf = g.gIBSUF.vIBSUF;
+                    }
+
+                    if (g.gIBSMun != null)
+                    {
+                        produto.AliquotaIbsMun = AliquotaExibida(g.gIBSMun.pIBSMun, g.gIBSMun.gRed);
+                        produto.ValorIbsMun = g.gIBSMun.vIBSMun;
+                    }
+
+                    if (g.gCBS != null)
+                    {
+                        produto.AliquotaCbs = AliquotaExibida(g.gCBS.pCBS, g.gCBS.gRed);
+                        produto.ValorCbs = g.gCBS.vCBS;
+                    }
+                }
+            }
+
+            var seletivo = imposto.IS;
+
+            if (seletivo != null)
+            {
+                produto.BaseIs = seletivo.vBCIS;
+                produto.AliquotaIs = seletivo.pIS;
+                produto.ValorIs = seletivo.vIS;
+            }
+        }
+
+        /// <summary>
+        /// Preenche os totais do IBS, CBS e Imposto Seletivo. Grupos ausentes no XML permanecem nulos.
+        /// </summary>
+        internal static void PreencherTotaisReformaTributaria(CalculoImpostoViewModel c, Total total)
+        {
+            var ibsCbs = total.IBSCBSTot;
+
+            if (ibsCbs != null)
+            {
+                c.ValorIbsUf = ibsCbs.gIBS?.gIBSUF?.vIBSUF;
+                c.ValorIbsMun = ibsCbs.gIBS?.gIBSMun?.vIBSMun;
+                c.ValorCbs = ibsCbs.gCBS?.vCBS;
+
+                var mono = ibsCbs.gMono;
+
+                if (mono != null)
+                {
+                    c.ValorIbsMonofasico = mono.vIBSMono;
+                    c.ValorCbsMonofasica = mono.vCBSMono;
+                    c.ValorIbsMonofasicoRetencao = mono.vIBSMonoReten;
+                    c.ValorCbsMonofasicaRetencao = mono.vCBSMonoReten;
+                }
+            }
+
+            c.ValorIs = total.ISTot?.vIS;
         }
 
         public static DanfeViewModel CreateFromXml(ProcNFe procNfe)
@@ -288,8 +377,11 @@ namespace DanfeSharp.Modelo
                         {
                             produto.ValorIpi = ipi.vIPI;
                             produto.AliquotaIpi = ipi.pIPI;
+                            produto.BaseIpi = ipi.vBC;
                         }
                     }
+
+                    PreencherReformaTributaria(produto, imposto);
                 }
 
                 model.Produtos.Add(produto);
@@ -309,6 +401,7 @@ namespace DanfeSharp.Modelo
             }
 
             model.CalculoImposto = CriarCalculoImpostoViewModel(infNfe.total.ICMSTot);
+            PreencherTotaisReformaTributaria(model.CalculoImposto, infNfe.total);
 
             var issqnTotal = infNfe.total.ISSQNtot;
 

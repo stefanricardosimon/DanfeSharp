@@ -55,6 +55,13 @@ namespace DanfeSharp.Blocos
                 .ComCampo("Cnpj", Formatador.FormatarCnpj(ViewModel.Emitente.CnpjCpf), AlinhamentoHorizontal.Centro)
                 .ComLargurasIguais();
 
+            // NT 2026.010, item 4.2. O tipo de regime de apuração do IBS e da CBS ainda não possui tag no leiaute
+            // da NF-e, portanto a área é reservada e nenhum conteúdo é impresso.
+            AdicionarLinhaCampos()
+                .ComCampo("Código do Regime Tributário", ViewModel.Emitente.CRTDescricao)
+                .ComCampo("Tipo de Regime de Apuração do IBS e da CBS", null)
+                .ComLarguras(0, 46.5F);
+
         }
 
         public XObject Logo
