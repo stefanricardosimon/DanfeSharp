@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using DanfeSharp.Graphics;
 using DanfeSharp.Elementos;
 using DanfeSharp.Modelo;
@@ -49,6 +50,23 @@ namespace DanfeSharp.Blocos
             l.Height = Constantes.CampoAltura;
             MainVerticalStack.Add(l);
             return l;
+        }
+
+        /// <summary>
+        /// Adiciona uma linha de campos numéricos facultativos: somente os campos com valor são impressos e a linha
+        /// só é adicionada quando existe ao menos um deles. A NT 2026.010 não autoriza imprimir informação inexistente no XML.
+        /// </summary>
+        public void AdicionarLinhaCamposFacultativos(params (string Cabecalho, double? Valor, int CasasDecimais)[] campos)
+        {
+            var existentes = campos.Where(c => c.Valor.HasValue).ToList();
+            if (existentes.Count == 0) return;
+
+            var l = AdicionarLinhaCampos();
+
+            foreach (var c in existentes)
+                l.ComCampoNumerico(c.Cabecalho, c.Valor, c.CasasDecimais);
+
+            l.ComLargurasIguais();
         }
 
         public override void Draw(Gfx gfx)

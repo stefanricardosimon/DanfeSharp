@@ -202,13 +202,15 @@ namespace DanfeSharp.Modelo
         #region Opções de exibição
 
         /// <summary>
-        /// Exibi os valores do ICMS Interestadual e Valor Total dos Impostos no bloco Cálculos do Imposto.
+        /// Exibe a linha facultativa do bloco "Total do ICMS / IPI" com o valor do FCP, FCP retido por ST,
+        /// DIFAL na UF de destino e FCP na UF de destino (somente os campos existentes no XML).
         /// </summary>
         public bool ExibirIcmsInterestadual { get; set; } = true;
 
         /// <summary>
-        /// Exibi os valores do PIS e COFINS no bloco Cálculos do Imposto.
+        /// Sem efeito. A NT 2026.010 retirou o PIS e a COFINS do bloco de totais do DANFE.
         /// </summary>
+        [Obsolete("A NT 2026.010 retirou o PIS e a COFINS do DANFE. Esta propriedade não tem mais efeito.")]
         public bool ExibirPisConfins { get; set; } = true;
 
         /// <summary>

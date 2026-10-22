@@ -10,7 +10,7 @@ namespace DanfeSharp
     internal class Tabela : ElementoBase
     {
         public List<TabelaColuna> Colunas { get; private set; }
-        public List<List<string>> Linhas { get; private set; }
+        public List<List<CelulaTabela>> Linhas { get; private set; }
         public float PaddingSuperior { get; private set; }
         public float PaddingInferior { get; private set; }
         public float PaddingHorizontal { get; private set; }
@@ -27,7 +27,7 @@ namespace DanfeSharp
         public Tabela(Estilo estilo) : base(estilo)
         {
             Colunas = new List<TabelaColuna>();
-            Linhas = new List<List<string>>();
+            Linhas = new List<List<CelulaTabela>>();
             LinhaAtual = 0;
             TamanhoFonteCabecalho = 6;
 
@@ -51,6 +51,12 @@ namespace DanfeSharp
         public void AdicionarLinha(List<string> linha)
         {
             if (linha.Count != Colunas.Count) throw new ArgumentException(nameof(linha));
+            AdicionarLinha(linha.Select((texto, i) => (CelulaTabela)new CelulaTexto(texto, Colunas[i].AlinhamentoHorizontal)).ToList());
+        }
+
+        public void AdicionarLinha(List<CelulaTabela> linha)
+        {
+            if (linha.Count != Colunas.Count) throw new ArgumentException(nameof(linha));
             Linhas.Add(linha);
         }
 
@@ -72,41 +78,27 @@ namespace DanfeSharp
             float x = X;
             _DY1 = _DY;
 
-            TextBlock[] tb = new TextBlock[Colunas.Count];
+            var linha = Linhas[LinhaAtual];
+            var larguras = new float[Colunas.Count];
+            float altura = FonteCorpo.AlturaLinha;
 
             for (int i = 0; i < Colunas.Count; i++)
             {
-                var c = Colunas[i];
-                var v = Linhas[LinhaAtual][i];
-
-                float w = (Width * c.PorcentagemLargura) / 100F;               
-
-                if (!string.IsNullOrWhiteSpace(v))
-                {
-
-                    tb[i] = new TextBlock(v, FonteCorpo)
-                    {
-                        Width = w - 2F * Estilo.PaddingHorizontal,
-                        X = x + PaddingHorizontal,
-                        Y = _DY + PaddingSuperior,
-                        AlinhamentoHorizontal = c.AlinhamentoHorizontal
-                    };
-                }
-
-                x += w;
-
+                float w = (Width * Colunas[i].PorcentagemLargura) / 100F;
+                larguras[i] = w - 2F * Estilo.PaddingHorizontal;
+                altura = Math.Max(altura, linha[i].CalcularAltura(larguras[i], FonteCorpo));
             }
 
-            var tbm = tb.Where(t => t != null).Max(t => t.Height);
-            if (tbm + _DY + PaddingInferior + PaddingSuperior > BoundingBox.Bottom) return false;
+            if (altura + _DY + PaddingInferior + PaddingSuperior > BoundingBox.Bottom) return false;
 
             for (int i = 0; i < Colunas.Count; i++)
-            { 
-                if(tb[i] != null)
-                    tb[i].Draw(gfx);
+            {
+                float w = (Width * Colunas[i].PorcentagemLargura) / 100F;
+                linha[i].Desenhar(gfx, new RectangleF(x + PaddingHorizontal, _DY + PaddingSuperior, larguras[i], altura), FonteCorpo);
+                x += w;
             }
 
-             _DY += Math.Max(tbm, FonteCorpo.AlturaLinha) + PaddingSuperior + PaddingInferior;
+            _DY += altura + PaddingSuperior + PaddingInferior;
 
             return true;
         }

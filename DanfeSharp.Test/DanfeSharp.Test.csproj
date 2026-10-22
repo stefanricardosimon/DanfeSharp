@@ -53,6 +53,7 @@
     <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DanfeRtcTests.cs" />
     <Compile Include="DanfeXmlTests.cs" />
     <Compile Include="Extentions.cs" />
     <Compile Include="FabricaFake.cs" />
@@ -97,6 +98,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Xml\NFe\v3.10\v3.10_Retrato.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Xml\NFe\v4.00\v4_IbsCbs.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Xml\NFe\v4.00\v4_IbsCbs_Paisagem.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Xml\NFe\v4.00\v4_ComLocalEntrega.xml">
