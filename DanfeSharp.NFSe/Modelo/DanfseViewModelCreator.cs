@@ -25,7 +25,10 @@ namespace DanfeSharp.NFSe.Modelo
         /// <param name="resolverMunicipio">
         /// Função opcional que resolve o nome de um município a partir do seu código do IBGE (7 dígitos).
         /// Necessária porque o leiaute da NFS-e não traz o nome do município do tomador/adquirente,
-        /// destinatário, intermediário e prestador, apenas o código. Quando omitida, o código é exibido.
+        /// destinatário, intermediário e prestador, apenas o código. Quando omitida, usa a tabela do IBGE
+        /// embutida na DLL (<see cref="TabelaMunicipios"/>); se o código não constar dela, o código é exibido.
+        /// Nos campos em que o XML já traz o nome do município (local da prestação, incidência do ISSQN e do
+        /// IBS/CBS, município emissor), o nome do XML tem prioridade e o resolvedor só é usado se ele vier vazio.
         /// </param>
         public static DanfseViewModel CriarDeArquivoXml(string caminho, Func<string, string> resolverMunicipio = null)
         {
@@ -96,20 +99,20 @@ namespace DanfeSharp.NFSe.Modelo
             var infNFSe = documento.infNFSe ?? throw new InvalidOperationException("O XML não contém o elemento infNFSe.");
             var infDPS = infNFSe.DPS?.infDPS ?? throw new InvalidOperationException("O XML não contém o elemento DPS/infDPS.");
 
-            resolverMunicipio = resolverMunicipio ?? (codigo => codigo);
+            resolverMunicipio = resolverMunicipio ?? TabelaMunicipios.ResolverNomeOuCodigo;
 
             var model = new DanfseViewModel();
 
-            PreencherCabecalho(model, infNFSe, infDPS);
+            PreencherCabecalho(model, infNFSe, infDPS, resolverMunicipio);
             PreencherIdentificacao(model, infNFSe, infDPS);
             PreencherPrestador(model, infDPS.prest, infNFSe, resolverMunicipio);
             PreencherTomador(model, infDPS.toma, resolverMunicipio);
             PreencherDestinatario(model, infDPS, resolverMunicipio);
             PreencherIntermediario(model, infDPS.interm, resolverMunicipio);
-            PreencherServico(model, infNFSe, infDPS);
-            PreencherTributacaoMunicipal(model, infNFSe, infDPS);
+            PreencherServico(model, infNFSe, infDPS, resolverMunicipio);
+            PreencherTributacaoMunicipal(model, infNFSe, infDPS, resolverMunicipio);
             PreencherTributacaoFederal(model, infDPS);
-            PreencherTributacaoIBSCBS(model, infNFSe, infDPS);
+            PreencherTributacaoIBSCBS(model, infNFSe, infDPS, resolverMunicipio);
             PreencherValorTotal(model, infNFSe, infDPS);
             PreencherInformacoesComplementares(model, infNFSe, infDPS);
 
@@ -120,10 +123,13 @@ namespace DanfeSharp.NFSe.Modelo
 
         #region Cabeçalho / Identificação
 
-        private static void PreencherCabecalho(DanfseViewModel model, InfNFSe infNFSe, InfDPS infDPS)
+        private static void PreencherCabecalho(DanfseViewModel model, InfNFSe infNFSe, InfDPS infDPS, Func<string, string> resolverMunicipio)
         {
             model.ChaveAcesso = SemPrefixoNFS(infNFSe.Id);
-            model.MunicipioEmitente = Formatador.FormatarMunicipioUf(infNFSe.xLocEmi, infNFSe.emit?.enderNac?.UF);
+            var enderEmit = infNFSe.emit?.enderNac;
+            model.MunicipioEmitente = Formatador.FormatarMunicipioUf(
+                NomeXmlOuResolvido(infNFSe.xLocEmi, enderEmit?.cMun, resolverMunicipio),
+                !string.IsNullOrWhiteSpace(enderEmit?.UF) ? enderEmit.UF : TabelaUF.ObterUFPorCodigoIbge(enderEmit?.cMun));
             model.AmbienteGerador = infNFSe.ambGer;
             model.TipoAmbiente = infDPS.tpAmb;
             model.Homologacao = infDPS.tpAmb == "2";
@@ -181,8 +187,13 @@ namespace DanfeSharp.NFSe.Modelo
             }
             else if (emit?.enderNac != null)
             {
+                // Prioriza o município do endereço do emitente (cMun resolvido pela tabela); xLocEmi (município
+                // emissor) fica como reserva, para quando o código não puder ser resolvido.
                 var end = emit.enderNac;
-                p.MunicipioUf = Traco(Formatador.FormatarMunicipioUf(infNFSe.xLocEmi, end.UF));
+                var nomeMunicipio = ResolverNomeMunicipio(end.cMun, resolverMunicipio)
+                    ?? (!string.IsNullOrWhiteSpace(infNFSe.xLocEmi) ? infNFSe.xLocEmi : end.cMun);
+                var uf = !string.IsNullOrWhiteSpace(end.UF) ? end.UF : TabelaUF.ObterUFPorCodigoIbge(end.cMun);
+                p.MunicipioUf = Traco(Formatador.FormatarMunicipioUf(nomeMunicipio, uf, " / "));
                 p.CodigoIbgeCep = Traco(JuntarNaoVazios(" / ", end.cMun, Formatador.FormatarCEP(end.CEP)));
                 p.Endereco = Traco(JuntarNaoVazios(", ", end.xLgr, end.nro, end.xCpl, end.xBairro));
             }
@@ -252,7 +263,7 @@ namespace DanfeSharp.NFSe.Modelo
 
         #region Serviço
 
-        private static void PreencherServico(DanfseViewModel model, InfNFSe infNFSe, InfDPS infDPS)
+        private static void PreencherServico(DanfseViewModel model, InfNFSe infNFSe, InfDPS infDPS, Func<string, string> resolverMunicipio)
         {
             var serv = infDPS.serv;
             var s = model.Servico;
@@ -265,7 +276,8 @@ namespace DanfeSharp.NFSe.Modelo
             if (!string.IsNullOrWhiteSpace(locPrest?.cLocPrestacao))
             {
                 var uf = TabelaUF.ObterUFPorCodigoIbge(locPrest.cLocPrestacao);
-                s.LocalPrestacao = JuntarNaoVazios(" / ", infNFSe.xLocPrestacao, uf, "BR");
+                var nome = NomeXmlOuResolvido(infNFSe.xLocPrestacao, locPrest.cLocPrestacao, resolverMunicipio);
+                s.LocalPrestacao = JuntarNaoVazios(" / ", nome, uf, "BR");
             }
             else
             {
@@ -280,7 +292,7 @@ namespace DanfeSharp.NFSe.Modelo
 
         #region Tributação Municipal (ISSQN)
 
-        private static void PreencherTributacaoMunicipal(DanfseViewModel model, InfNFSe infNFSe, InfDPS infDPS)
+        private static void PreencherTributacaoMunicipal(DanfseViewModel model, InfNFSe infNFSe, InfDPS infDPS, Func<string, string> resolverMunicipio)
         {
             var tribMun = infDPS.valores?.trib?.tribMun;
             var valoresNFSe = infNFSe.valores;
@@ -291,7 +303,8 @@ namespace DanfeSharp.NFSe.Modelo
             m.TipoTributacao = Descricoes.TribISSQN(tribMun.tribISSQN);
 
             var uf = TabelaUF.ObterUFPorCodigoIbge(infNFSe.cLocIncid);
-            m.MunicipioUfPaisIncidencia = JuntarNaoVazios(" / ", infNFSe.xLocIncid, uf, tribMun.cPaisResult);
+            var nomeIncidencia = NomeXmlOuResolvido(infNFSe.xLocIncid, infNFSe.cLocIncid, resolverMunicipio);
+            m.MunicipioUfPaisIncidencia = JuntarNaoVazios(" / ", nomeIncidencia, uf, tribMun.cPaisResult);
 
             m.RegimeEspecial = Descricoes.RegEspTrib(infDPS.prest?.regTrib?.regEspTrib);
             m.TipoImunidade = Descricoes.TpImunidade(tribMun.tpImunidade);
@@ -359,7 +372,7 @@ namespace DanfeSharp.NFSe.Modelo
 
         #region Tributação IBS/CBS
 
-        private static void PreencherTributacaoIBSCBS(DanfseViewModel model, InfNFSe infNFSe, InfDPS infDPS)
+        private static void PreencherTributacaoIBSCBS(DanfseViewModel model, InfNFSe infNFSe, InfDPS infDPS, Func<string, string> resolverMunicipio)
         {
             var declarado = infDPS.IBSCBS;
             var computado = infNFSe.IBSCBS;
@@ -371,7 +384,8 @@ namespace DanfeSharp.NFSe.Modelo
             i.CstCClassTrib = JuntarNaoVazios(" / ", sitClas?.CST, sitClas?.cClassTrib);
 
             var uf = TabelaUF.ObterUFPorCodigoIbge(computado.cLocalidadeIncid);
-            i.IndicadorOperacaoMunicipioIncidencia = JuntarNaoVazios(" / ", declarado.cIndOp, computado.cLocalidadeIncid, computado.xLocalidadeIncid, uf);
+            var nomeIncidencia = NomeXmlOuResolvido(computado.xLocalidadeIncid, computado.cLocalidadeIncid, resolverMunicipio);
+            i.IndicadorOperacaoMunicipioIncidencia = JuntarNaoVazios(" / ", declarado.cIndOp, computado.cLocalidadeIncid, nomeIncidencia, uf);
 
             var tribFed = infDPS.valores?.trib?.tribFed;
             double? exclusoesReducoes = SomarOpcionais(
@@ -543,6 +557,26 @@ namespace DanfeSharp.NFSe.Modelo
             }
 
             return SemInformacao;
+        }
+
+        /// <summary>
+        /// Resolve o nome do município pelo código do IBGE. Retorna null quando o código está vazio ou
+        /// quando o resolvedor não conseguiu traduzi-lo (devolveu vazio ou o próprio código).
+        /// </summary>
+        private static string ResolverNomeMunicipio(string codigo, Func<string, string> resolverMunicipio)
+        {
+            if (string.IsNullOrWhiteSpace(codigo)) return null;
+
+            var nome = resolverMunicipio(codigo);
+            return string.IsNullOrWhiteSpace(nome) || nome.Trim() == codigo.Trim() ? null : nome;
+        }
+
+        /// <summary>
+        /// Usa o nome do município que veio no XML; só recorre ao resolvedor quando ele está vazio.
+        /// </summary>
+        private static string NomeXmlOuResolvido(string nomeXml, string codigo, Func<string, string> resolverMunicipio)
+        {
+            return !string.IsNullOrWhiteSpace(nomeXml) ? nomeXml : ResolverNomeMunicipio(codigo, resolverMunicipio);
         }
 
         private static string CodigoIbgeCep(Endereco end)

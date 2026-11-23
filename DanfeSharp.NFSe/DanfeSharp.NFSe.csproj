@@ -24,6 +24,9 @@
     <EmbeddedResource Include="Resources\LogoNFSe.png">
       <LogicalName>DanfeSharp.NFSe.Resources.LogoNFSe.png</LogicalName>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\MunicipiosIbge.txt">
+      <LogicalName>DanfeSharp.NFSe.Resources.MunicipiosIbge.txt</LogicalName>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>
